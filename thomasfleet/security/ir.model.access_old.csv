@@ -39,7 +39,7 @@ access_thomaslease_lease_line_user,thomasfleet.lease.user,model_thomaslease_leas
 access_thomaslease_lease_line_manager,thomasfleet.lease.manager,model_thomaslease_lease_line,base.group_system,1,1,1,1
 access_thomaslease_document_user,thomasfleet.document_user.user,model_thomasfleet_customer_document,base.group_user,1,0,0,0
 access_thomaslease_document_manager,thomasfleet.document_user.manager,model_thomasfleet_customer_document,base.group_system,1,1,1,1
-access_thomasfleet_account_invoice_user,thomasfleet.account_invoice_user.user,model_account_invoice,base.group_user,1,0,0,0
-access_thomasfleet_account_invoice_user_manager,thomasfleet.account_invoice_user.manager,model_account_invoice,base.group_system,1,1,1,1
+access_thomasfleet_account_invoice_user,thomasfleet.account_invoice_user.user,model_account_move,base.group_user,1,0,0,0
+access_thomasfleet_account_invoice_user_manager,thomasfleet.account_invoice_user.manager,model_account_move,base.group_system,1,1,1,1
 access_thomasfleet_workorder_user,thomasfleet.workorder.user,model_thomasfleet_workorder,base.group_user,1,0,0,0
 access_thomasfleet_workorder_manager,thomasfleet.workorder.manager,model_thomasfleet_workorder,base.group_system,1,1,1,1

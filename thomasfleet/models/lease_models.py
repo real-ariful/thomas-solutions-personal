@@ -188,8 +188,10 @@ class ThomasLease(models.Model):
         return self.env.ref('thomasfleet.lease_agreement').report_action(self)
 
     _name = 'thomaslease.lease'
+    _description = 'Thomas Lease Lease'
 
-    active = fields.Boolean('Active', default=True, track_visibility="onchange")
+
+    active = fields.Boolean('Active', default=True, tracking=True)
     lease_number = fields.Char('Rental ID', tracking=True)
     po_number = fields.Char("Purchase Order #", tracking=True)
     po_comments = fields.Char("Purchase Order Comments", tracking=True)
@@ -467,24 +469,11 @@ class ThomasLease(models.Model):
             res.append((record.id, name))
         return res
 
-    '''
-    @api.model
-    def create(self, data):
-        record = super(ThomasLease, self).create(data)
-        Agreements = self.env['thomaslease.lease']
-        aCount = 0
-        if record.customer_id:
-            aCount = Agreements.search_count([('customer_id', '=', record.customer_id.id)])
-
-        record.lease_number = str(record.customer_id.name) + "_" + str(record.unit_no) + "_" + str(
-            record.lease_start_date) + "_" + str(aCount)
-
-        return record
-    '''
 
 
 class ThomasFleetLeaseLine(models.Model):
     _name = 'thomaslease.lease_line'
+    _description = 'Thomas Fleet Lease Line'
 
 
     @api.depends('product_id')
@@ -609,6 +598,7 @@ class ThomasFleetLeaseLine(models.Model):
 
 class ThomasFleetReturnWizard(models.TransientModel):
     _name = 'thomaslease.lease.return.wizard'
+    _description = 'Thomas Fleet Return Wizard'
 
     def _default_lease_ids(self):
         # for the_id in self.env.context.get('active_ids'):
@@ -639,6 +629,8 @@ class ThomasFleetReturnWizard(models.TransientModel):
 
 class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
     _name = 'thomaslease.lease.invoice.wizard'
+    _description = 'Thomas Fleet Lease Invoice Wizard'
+
     lease_records = []
 
     def _default_lease_ids(self):
@@ -723,13 +715,6 @@ class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
         # if start date - handled by initial invoicing
         # if return date
         if lease.run_initial_invoicing:
-            '''
-            if "Dofasco" in lease.customer_id.name:
-                init_to = i_from - relativedelta.relativedelta(days=1)
-                i_to = init_to
-                init_from = l_sdt
-                i_from = init_from
-            else:'''
             if l_rdt:
                 if i_to.month == l_rdt.month and i_to.year == l_rdt.year:
                     if l_rdt.day < i_to.day:
@@ -806,13 +791,6 @@ class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
         # if start date - handled by initial invoicing
         # if return date
         if lease.run_initial_invoicing:
-            '''
-            if "Dofasco" in lease.customer_id.name:
-                init_to = i_from - relativedelta.relativedelta(days=1)
-                i_to = init_to
-                init_from = l_sdt
-                i_from = init_from
-            else:'''
             if l_rdt:
                 if i_to.month == l_rdt.month and i_to.year == l_rdt.year:
                     if l_rdt.day < i_to.day:
@@ -833,16 +811,7 @@ class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
                     i_from = datetime(i_to.year, i_to.month, 1)
                     if l_sdt > i_from:
                         i_from = lease.billing_start_date
-        '''
-        lease.update({
-            'billing_start_date': billing_strt_date,
-            'invoice_from': i_from,
-            'invoice_to': i_to,
-            'invoice_due_date': inv_due_date,
-            'invoice_generation_date': dt,
-            'invoice_posting_date':dt
-        })
-        '''
+        
         lease['billing_start_date'] = billing_strt_date
         lease['invoice_from'] = i_from
         lease['invoice_to'] = i_to
@@ -1701,7 +1670,7 @@ class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
             'vehicle_id': the_lease.id.vehicle_id.id,
             'comment': comment,
             'invoice_date': inv_date,  # self.invoice_date,#the_lease.id.invoice_generation_date,
-            'date_due': the_lease.id.invoice_due_date,
+            'invoice_date_due': the_lease.id.invoice_due_date,
             'invoice_from': the_lease.id.invoice_from,
             'invoice_to': the_lease.id.invoice_to,
             'invoice_posting_date': the_lease.id.invoice_posting_date,
@@ -1822,7 +1791,7 @@ class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
                 'vehicle_id': the_lease.id.vehicle_id.id,
                 'comment': comment,
                 'invoice_date': self.invoice_date,  # the_lease.id.invoice_generation_date,
-                'date_due': the_lease.id.invoice_due_date,
+                'invoice_date_due': the_lease.id.invoice_due_date,
                 'invoice_from': prev_month_from,
                 'invoice_to': prev_month_to,
                 'invoice_posting_date': the_lease.id.invoice_generation_date,
@@ -2122,7 +2091,7 @@ class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
                                 'vehicle_id': lease.vehicle_id.id,
                                 'comment': comment,
                                 'invoice_date': inv_date,  # lease.invoice_generation_date,
-                                'date_due': lease.invoice_due_date,
+                                'invoice_date_due': lease.invoice_due_date,
                                 'invoice_from': prev_month_from,
                                 'invoice_to': prev_month_to,
                                 'invoice_posting_date': lease.invoice_generation_date,
@@ -2153,7 +2122,7 @@ class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
                     'vehicle_id': lease.vehicle_id.id,
                     'comment': comment,
                     'invoice_date': the_wizard.invoice_date,  # lease.invoice_generation_date,
-                    'date_due': lease.invoice_due_date,
+                    'invoice_date_due': lease.invoice_due_date,
                     'invoice_from': lease.invoice_from,
                     'invoice_to': lease.invoice_to,
                     'invoice_posting_date': lease.invoice_posting_date,
@@ -2497,7 +2466,7 @@ class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
                                 'vehicle_id': lease.vehicle_id.id,
                                 'comment': comment,
                                 'invoice_date': inv_date,  # lease.invoice_generation_date,
-                                'date_due': lease.invoice_due_date,
+                                'invoice_date_due': lease.invoice_due_date,
                                 'invoice_from': prev_month_from,
                                 'invoice_to': prev_month_to,
                                 'invoice_posting_date': lease.invoice_generation_date,
@@ -2528,7 +2497,7 @@ class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
                     'vehicle_id': lease.vehicle_id.id,
                     'comment': comment,
                     'invoice_date': the_wizard.invoice_date,  # lease.invoice_generation_date,
-                    'date_due': lease.invoice_due_date,
+                    'invoice_date_due': lease.invoice_due_date,
                     'invoice_from': lease.invoice_from,
                     'invoice_to': lease.invoice_to,
                     'invoice_posting_date': lease.invoice_posting_date,
@@ -2826,19 +2795,4 @@ class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
         )
         return res
 
-        # return {
-        #
-        #     'name': 'Lease Invoice Creation',
-        #
-        #     'type': 'ir.actions.act_window',
-        #
-        #     'res_model': 'thomaslease.message',
-        #
-        #     'res_id': rec.id,
-        #
-        #     'view_mode': 'form',
-        #
-        #     'view_type': 'form',
-        #
-        #     'target': 'new'
-        # }
+

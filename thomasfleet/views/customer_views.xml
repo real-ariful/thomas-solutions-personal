@@ -14,7 +14,7 @@
                                     options='{"terminology": "archive"}'/>
                             </button>
                         </div>
-                        <field name="image" widget='image' class="oe_avatar" options='{"preview_image": "image_medium", "size": [90, 90]}'/>
+                        <!-- <field name="image" widget='image' class="oe_avatar" options='{"preview_image": "image_medium", "size": [90, 90]}'/> -->
                         <div class="oe_title">
                             <field name="is_company" invisible="1"/>
                             <field name="commercial_partner_id" invisible="1"/>
@@ -178,7 +178,7 @@
                                             <field name="supplier" invisible="True"/>
                                             <field name="customer" invisible="True"/>
                                             <field name="lang" invisible="True"/>
-                                            <field name="image" invisible="True"/>
+                                            <!-- <field name="image" invisible="True"/> -->
 
                                         </sheet>
                                     </form>

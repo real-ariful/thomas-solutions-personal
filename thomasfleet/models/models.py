@@ -95,8 +95,34 @@ class ThomasAssetPhoto(models.Model):
         tools.image_resize_images(vals)
         return super(ThomasAssetPhoto, self).write(vals)
 
+class ThomasFleetTest(models.Model):
+    _inherit = ['fleet.vehicle']
+
+    unit_int = fields.Integer(compute='_getInteger', store=True)
+    @api.depends('unit_no')
+    def _getInteger(self):
+        for rec in self:
+            try:
+                rec.unit_int = int(rec.unit_no)
+            except ValueError:
+                rec.unit_int = 0
+                raise models.ValidationError('Protractor Unit # ' + rec.unit_no
+
+                                             + ' is not valid (it must be an integer)')
+
+    
+
+    def default_unit_no(self):
+        last_vehicle = self.env['fleet.vehicle'].search([], limit=1, order='unit_int desc')
+        print('Last Unit #' + str(last_vehicle.unit_no))
+        return str(int(last_vehicle.unit_no) + 1)
+
+
+    unit_no = fields.Char("Unit #", default=default_unit_no, required=True, tracking=True)
+
+
 class ThomasFleetVehicle(models.Model):
-    # _name = 'fleet.vehicle'
+    _name = 'fleet.vehicle'
     _description = 'Thomas Fleet Vehicle'
     _inherit = ['thomas.asset', 'fleet.vehicle']
     _order = "unit_int asc"
@@ -104,7 +130,19 @@ class ThomasFleetVehicle(models.Model):
     log = logging.getLogger('thomas')
     log.setLevel(logging.INFO)
     unit_int = fields.Integer(compute='_getInteger', store=True)
-    tag_ids = fields.Many2many('fleet.vehicle.tag', 'fleet_vehicle_vehicle_tag_rel_new', 'vehicle_tag_id', 'tag_id', 'Tags', copy=False)
+    
+    @api.depends('unit_no')
+    def _getInteger(self):
+        for rec in self:
+            try:
+                rec.unit_int = int(rec.unit_no)
+            except ValueError:
+                rec.unit_int = 0
+                raise models.ValidationError('Protractor Unit # ' + rec.unit_no
+
+                                             + ' is not valid (it must be an integer)')
+
+    
 
     def default_unit_no(self):
         last_vehicle = self.env['fleet.vehicle'].search([], limit=1, order='unit_int desc')
@@ -232,16 +270,7 @@ class ThomasFleetVehicle(models.Model):
 
 
 
-    @api.depends('unit_no')
-    def _getInteger(self):
-        for rec in self:
-            try:
-                rec.unit_int = int(rec.unit_no)
-            except ValueError:
-                rec.unit_int = 0
-                raise models.ValidationError('Protractor Unit # ' + rec.unit_no
 
-                                             + ' is not valid (it must be an integer)')
 
     @api.depends('workorder_invoices_count','protractor_workorders')
     def _compute_maintenance_cost(self):
@@ -853,6 +882,7 @@ class ThomasFleetOdometer(models.Model):
     _inherit= 'fleet.vehicle.odometer'
     _description = 'Thomas Fleet Odometer'
 
+
     lease_id = fields.Many2one('thomaslease.lease', 'Rental Agreement')
     customer_id =fields.Many2one(related="lease_id.customer_id", string="Customer", readonly=True)
     activity = fields.Selection([('lease_out', 'Rent Start'), ('lease_in', 'Rent Return'),('service', 'Service'),('spare_swap', 'Spare Swap'), ('spare_swap_back','Spare Swap Back')], string="Activity", tracking=True)
@@ -871,6 +901,7 @@ class ThomasFleetOdometer(models.Model):
 class ThomasFleetVehicleModel(models.Model):
     _inherit = 'fleet.vehicle.model'
     _description = 'Thomas Fleet Vehicle Model'
+
 
     name = fields.Char('Model name', required=True)
     trim_id = fields.One2many('thomasfleet.trim', 'model_id', 'Available Trims')
@@ -895,7 +926,6 @@ class ThomasFleetTrim(models.Model):
     name = fields.Char('Trim Name')
     description = fields.Char('Description')
     brand_id = fields.Many2one(related='model_id.brand_id', string='Make')
-
     model_id = fields.Many2one('fleet.vehicle.model', required=True, string='Model', help='Model of the vehicle',
                                domain="[('brand_id','=',brand_id)]")
 
@@ -1061,7 +1091,8 @@ class ThomasFleetJournalItem(models.Model):
                 })
 
 
-
+    def reload(self):
+        print("RELOAD")
 
     @api.depends('invoice_line_id','work_order_id', 'type')
     def default_vehicle_id(self):
@@ -1093,7 +1124,7 @@ class ThomasFleetJournalItem(models.Model):
     type = fields.Selection([('revenue', 'Revenue'), ('expense', 'Expense')])
     work_order_id = fields.Many2one('thomasfleet.work_order', string='Work Order', help='Work Order For a Vehicle')
     invoice_line_id = fields.Many2one('account.move.line', string='Invoice Line Item', help='Rental Invoice for the Unit')
-    customer_id = fields.Many2one('res.partner', deafult=default_customer_id,  string='Customer',
+    customer_id = fields.Many2one('res.partner', default=default_customer_id,  string='Customer',
                                   help='Work Order For a Vehicle', readonly=True)
     vehicle_id = fields.Many2one('fleet.vehicle',default=default_vehicle_id,  string='Unit',
                                  help='Work Order For a Vehicle', readonly=True)

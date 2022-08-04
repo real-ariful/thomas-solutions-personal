@@ -44,14 +44,14 @@
                                         help="Show all the Photographs for this vehicle"
                                         string="Vehicle Pictures">
                                 </button>
-                                <button name="return_action_to_open"
+                                <!-- <button name="return_action_to_open"
                                         type="object"
                                         class="oe_stat_button"
                                         icon="fa-flask"
                                         context="{'xml_id':'fleet_vehicle_log_fuel_action'}"
                                         help="show the fuel logs for this vehicle">
                                     <field name="fuel_logs_count" widget="statinfo" string="Fuel"/>
-                                </button>
+                                </button> -->
                                 <button name="return_action_to_open"
                                         type="object"
                                         class="oe_stat_button"
@@ -64,7 +64,7 @@
                                     <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
                                 </button>
                             </div>
-                            <field name="image_medium" widget='image' class="oe_avatar"/>
+                            <!-- <field name="image_medium" widget='image' class="oe_avatar"/> -->
                             <div class="oe_title">
                                 <h1>
                                     <field name="unit_slug" class="oe_read_only"/>
@@ -143,7 +143,7 @@
                                                 <field name="unit_no"/>
                                                 <field name="name"/>
                                                 <field name="description"/>
-                                                <field name="type"/>
+                                                <!-- <field name="vehicle_type"/> -->
                                                 <field name="thomas_purchase_price"/>
                                             </tree>
                                         </field>
@@ -203,23 +203,23 @@
                                                   decoration-muted="state == 'cancel'"
                                                   string="Invoice">
                                                 <field name="partner_id" groups="base.group_user" string="Customer"/>
-                                                <field name="date_invoice"/>
-                                                <field name="number"/>
+                                                <field name="invoice_date"/>
+                                                <!-- <field name="number"/> -->
                                                 <field name="commercial_partner_id" invisible="1"/>
-                                                <field name="reference" invisible="1"/>
+                                                <field name="ref" invisible="1"/>
                                                 <field name="name" invisible="1"/>
                                                 <field name="journal_id" invisible="1"/>
                                                 <field name="company_id" groups="base.group_multi_company"
                                                        options="{'no_create': True}"/>
                                                 <field name="user_id"/>
-                                                <field name="date_due"/>
-                                                <field name="origin"/>
+                                                <field name="invoice_date_due"/>
+                                                <field name="invoice_origin"/>
                                                 <field name="amount_total_signed" string="Total" sum="Total"/>
-                                                <field name="residual_signed" string="Amount Due" sum="Amount Due"/>
+                                                <field name="amount_residual_signed" string="Amount Due" sum="Amount Due"/>
                                                 <field name="currency_id" invisible="1"/>
                                                 <field name="company_currency_id" invisible="1"/>
                                                 <field name="state"/>
-                                                <field name="type" invisible="context.get('type',True)"/>
+                                                <!-- <field name="type" invisible="context.get('type',True)"/> -->
                                             </tree>
                                         </field>
                                     </group>
@@ -232,7 +232,7 @@
                                     <h2>Line Item Revenue</h2>
                                        <field name="line_items" options="{'no_create': True}" readonly="1">
                                            <tree>
-                                                <field name="date_invoice"/>
+                                                <field name="invoice_date"/>
                                                 <field name="invoice_id" string="Invoice"/>
                                                 <field name="partner_id" string="Customer"/>
                                                 <field name="name"/>
@@ -295,7 +295,7 @@
                         <field name="location"/>
                         <field name="state_id"/>
                         <field name="id"/>
-                        <field name="image"/>
+                        <!-- <field name="image"/> -->
                         <field name="tag_ids"/>
                         <field name="fleet_status"/>
 
@@ -382,7 +382,7 @@
         <record id='thomas_vehicle_profit_pivot_action' model='ir.actions.act_window'>
             <field name="name">Vehicles Profitability Report</field>
             <field name="res_model">fleet.vehicle</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">pivot</field>
             <field name="view_id" ref="thomas_vehicle_profit_pivot_view"/>
         </record>
@@ -404,7 +404,7 @@
         <record id='thomas_vehicle_expense_pivot_action' model='ir.actions.act_window'>
             <field name="name">Vehicles Expense Report</field>
             <field name="res_model">thomasfleet.workorder</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">pivot</field>
             <field name="view_id" ref="thomas_vehicle_expense_pivot_view"/>
             <field name="context">{"lease" : True}</field>
@@ -417,8 +417,8 @@
             <field name="model">account.move.line</field>
             <field name="arch" type="xml">
                 <pivot>
-                    <field name="reference" type="row" />
-                    <field name="date_invoice" interval="month" type="col" />
+                    <!-- <field name="reference" type="row" /> -->
+                    <field name="invoice_date" interval="month" type="col" />
                     <field name="price_total" type="measure" />
                 </pivot>
             </field>
@@ -427,7 +427,7 @@
         <record id='thomas_vehicle_revenue_pivot_action' model='ir.actions.act_window'>
             <field name="name">Vehicles Revenue Report</field>
             <field name="res_model">account.move.line</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">pivot</field>
 
             <field name="view_id" ref="thomas_vehicle_revenue_pivot_view"/>
@@ -442,7 +442,7 @@
             <field name="arch" type="xml">
                 <pivot>
                     <field name="product_id" type="row" />
-                    <field name="date_invoice" interval="month" type="col" />
+                    <field name="invoice_date" interval="month" type="col" />
                     <field name="price_total" type="measure" />
                 </pivot>
             </field>
@@ -451,7 +451,7 @@
         <record id='thomas_product_revenue_pivot_action' model='ir.actions.act_window'>
             <field name="name">Product Revenue Report</field>
             <field name="res_model">account.move.line</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">pivot</field>
             <field name="view_id" ref="thomas_product_revenue_pivot_view"/>
         </record>
@@ -465,7 +465,7 @@
                 <pivot>
                     <field name="account_id" type="row" />
                     <field name="partner_id" type="row"/>
-                    <field name="date_invoice" interval="month" type="col" />
+                    <field name="invoice_date" interval="month" type="col" />
                     <field name="price_total" type="measure" />
                 </pivot>
             </field>
@@ -474,7 +474,7 @@
         <record id='thomas_account_revenue_pivot_action' model='ir.actions.act_window'>
             <field name="name">Account Revenue Report</field>
             <field name="res_model">account.move.line</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">pivot</field>
             <field name="view_id" ref="thomas_account_revenue_pivot_view"/>
         </record>
@@ -485,8 +485,8 @@
             <field name="arch" type="xml">
                 <pivot>
                     <field name="partner_id" type="row"/>
-                    <field name="reference" type="row"/>
-                    <field name="date_invoice" interval="month" type="col" />
+                    <field name="ref" type="row"/>
+                    <field name="invoice_date" interval="month" type="col" />
                     <field name="price_total" type="measure" />
                 </pivot>
             </field>
@@ -495,7 +495,7 @@
         <record id='thomas_customer_revenue_pivot_action' model='ir.actions.act_window'>
             <field name="name">Customer Revenue Report</field>
             <field name="res_model">account.move.line</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">pivot</field>
             <field name="view_id" ref="thomas_customer_revenue_pivot_view"/>
         </record>
@@ -577,7 +577,7 @@
             <field name="arch" type="xml">
                 <kanban>
                     <field name="photo_set_id"/>
-                    <field name="image"/>
+                    <!-- <field name="image"/> -->
                     <field name="id"/>
                     <field name="position"/>
                     <templates>
@@ -660,7 +660,7 @@
         <record id='thomas_asset_photos_action' model='ir.actions.act_window'>
             <field name="name">Vehicles Photos</field>
             <field name="res_model">thomasfleet.asset_photo_set</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">kanban,tree,form</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
@@ -672,7 +672,7 @@
         <record id='thomas_lease_agreements_action' model='ir.actions.act_window'>
             <field name="name">Vehicle Rental Agreements</field>
             <field name="res_model">thomaslease.lease</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">tree,form</field>
             <field name="context">{"lease" : True}</field>
         </record>
@@ -680,10 +680,10 @@
         <record id='thomas_lease_invoices_action' model='ir.actions.act_window'>
             <field name="name">Vehicle Rental Invoices</field>
             <field name="res_model">account.move</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">tree,form</field>
             <field name="context">{'type':'out_invoice'}</field>
-            <field name="view_id" ref="account.move_tree"/>
+            <field name="view_id" ref="account.view_move_tree"/>
             <field name="search_view_id" ref="account.view_account_invoice_filter"/>
         </record>
 
@@ -834,7 +834,7 @@
         <record id='thomas_lease_status_action' model='ir.actions.act_window'>
             <field name="name">Rental Status</field>
             <field name="res_model">thomasfleet.lease_status</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
@@ -913,7 +913,7 @@
         <record id='thomas_workorder_action' model='ir.actions.act_window'>
             <field name="name">Work Orders</field>
             <field name="res_model">thomasfleet.workorder</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
@@ -1008,7 +1008,7 @@
         <record id='thomas_journal_item_action' model='ir.actions.act_window'>
             <field name="name">Unit Journal Items</field>
             <field name="res_model">thomasfleet.journal_item</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">tree,form,pivot</field>
             <field name="context">{"lease" : True}</field>
             <field name="help" type="html">
@@ -1064,7 +1064,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">thomasfleet.journal_item.wizard</field>
             <field name="view_id" ref="journal_item_wizard_form"></field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
@@ -1099,14 +1099,13 @@
             <field name="model">thomasfleet.journal_item</field>
             <field name="arch" type="xml">
                 <tree string="Items" create="false" edit="false" delete="false">
-
-                            <field name="vehicle_id"/>
-                            <field name="transaction_date"/>
-                            <field name="type"/>
-                            <field name="expense"/>
-                            <field name="revenue"/>
-                            <field name="customer_id"/>
-                            <field name="product_id"/>
+                    <field name="vehicle_id"/>
+                    <field name="transaction_date"/>
+                    <field name="type"/>
+                    <field name="expense"/>
+                    <field name="revenue"/>
+                    <field name="customer_id"/>
+                    <field name="product_id"/>
                 </tree>
             </field>
         </record>
@@ -1169,7 +1168,7 @@
         <record id='thomas_workorder_details_action' model='ir.actions.act_window'>
             <field name="name">Details</field>
             <field name="res_model">thomasfleet.workorder_details</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">form</field>
             <field name="target">current</field>
             <field name="help" type="html">
@@ -1185,7 +1184,7 @@
         <record id='thomas_model_trims_action' model='ir.actions.act_window'>
             <field name="name">Model Trims</field>
             <field name="res_model">thomasfleet.trim</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
@@ -1240,7 +1239,7 @@
         <record id='thomas_accessory_action' model='ir.actions.act_window'>
             <field name="name">Accessories</field>
             <field name="res_model">thomasfleet.accessory</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">tree,form</field>
             <field name="context">{"lease" : True}</field>
             <field name="help" type="html">
@@ -1260,7 +1259,7 @@
         <record id='thomas_location_action' model='ir.actions.act_window'>
             <field name="name">Locations</field>
             <field name="res_model">thomasfleet.location</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
@@ -1278,7 +1277,7 @@
         <record id='thomas_seatmaterial_action' model='ir.actions.act_window'>
             <field name="name">Seat Materials</field>
             <field name="res_model">thomasfleet.seatmaterial</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
@@ -1296,7 +1295,7 @@
         <record id='thomas_floormaterial_action' model='ir.actions.act_window'>
             <field name="name">Floor Materials</field>
             <field name="res_model">thomasfleet.floormaterial</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
@@ -1314,7 +1313,7 @@
         <record id='thomas_fueltype_action' model='ir.actions.act_window'>
             <field name="name">Fuel Types</field>
             <field name="res_model">thomasfleet.fueltype</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
@@ -1332,7 +1331,7 @@
         <record id='thomas_inclusions_action' model='ir.actions.act_window'>
             <field name="name">Inclusions</field>
             <field name="res_model">thomasfleet.inclusions</field>
-            <field name="view_type">form</field>
+            <!-- <field name="view_type">form</field> -->
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">

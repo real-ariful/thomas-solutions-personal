@@ -19,7 +19,7 @@
             <field name="name">Message</field>
             <field name="res_model">thomaslease.message</field>
             <field name="view_type">form</field>
-            <field name="view_mode">form</field>
+            <!-- <field name="view_mode">form</field> -->
             <field name="target">new</field>
         </record>
     </data>

@@ -33,6 +33,7 @@
                 </form>
             </field>
         </record>
+        
         <record id='lease_return_wizard_form' model='ir.ui.view'>
             <field name='name'>Rental Return wizard form view</field>
             <field name='model'>thomaslease.lease.return.wizard</field>
@@ -82,6 +83,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
         </record>
+
         <record id='thomaslease_lease_view_form' model='ir.ui.view'>
             <field name="name">thomaslease.lease.form</field>
             <field name="model">thomaslease.lease</field>
@@ -242,10 +244,10 @@
                                         <field name="company_id" groups="base.group_multi_company"
                                                options="{'no_create': True}"/>
                                         <field name="user_id"/>
-                                        <field name="date_due"/>
-                                        <field name="origin"/>
+                                        <field name="invoice_date_due"/>
+                                        <field name="invoice_origin"/>
                                         <field name="amount_total_signed" string="Total" sum="Total"/>
-                                        <field name="residual_signed" string="Amount Due" sum="Amount Due"/>
+                                        <field name="amount_residual_signed" string="Amount Due" sum="Amount Due"/>
                                         <field name="currency_id" invisible="1"/>
                                         <field name="company_currency_id" invisible="1"/>
                                         <field name="state"/>
@@ -377,11 +379,8 @@
 
 
         <menuitem name="Rental Agreements" id="lease_agreements_main" sequence="2"/>
-
-        <menuitem name="Rental Agreements" action="thomaslease_lease_action" parent="lease_agreements_main"
-                  id="thomaslease_lease_menu"/>
-         <menuitem action="open_lease_return_wizard_action" parent="thomaslease_lease_menu"
-                  id="thomaslease_return_menu"/>
+        <menuitem name="Rental Agreements" action="thomaslease_lease_action" parent="lease_agreements_main" id="thomaslease_lease_menu"/>
+        <menuitem action="open_lease_return_wizard_action" parent="thomaslease_lease_menu" id="thomaslease_return_menu"/>
 
 
     </data>

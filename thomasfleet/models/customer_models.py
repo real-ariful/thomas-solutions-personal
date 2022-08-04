@@ -155,6 +155,7 @@ class ThomasContact(models.Model):
 
 class ThomasCustomerDocument(models.Model):
     _name = 'thomasfleet.customer_document'
+    _description = 'Thomas Customer Document'
 
     customer_id = fields.Many2one("res.partner", "Customer")
     name=fields.Char("Name")
@@ -165,6 +166,7 @@ class ThomasCustomerDocument(models.Model):
 
 class ThomaseDepartment(models.Model):
     _name = 'thomasfleet.customer_department'
+    _description = 'Thomase Department'
 
     name = fields.Char("Name")
     description = fields.Char("Description")

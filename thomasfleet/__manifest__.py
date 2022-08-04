@@ -11,7 +11,7 @@
     'data': [
         'security/thomasfleet_security.xml',
         'security/ir.model.access.csv',
-        'views/message_views.xml',
+        # 'views/message_views.xml',
         'views/views.xml',
         'views/lease_views.xml',
         'views/customer_views.xml',
