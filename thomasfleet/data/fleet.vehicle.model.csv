@@ -1,0 +1,122 @@
+id,brand_id,name
+thomasfleet.ford_350_hr_transit_van,Ford,350 HR Transit Van
+thomasfleet.international_3800,International,3800
+thomasfleet.international_40s,International,40S
+thomasfleet.international_4300,International,4300
+thomasfleet.international_4400,International,4400
+thomasfleet.international_4400_cab_&_chassis,International,4400 Cab & Chassis
+thomasfleet.international_4400_sba,International,4400 SBA
+thomasfleet.international_4400_sba_tandem_axle_flatbed,International,4400 SBA TANDEM AXLE FLATBED
+thomasfleet.international_4700,International,4700
+thomasfleet.wstrn_4800,Wstrn,4800
+thomasfleet.international_4900,International,4900
+thomasfleet.international_4900_tandem,International,4900 Tandem
+thomasfleet.wstrn_5864ss,Wstrn,5864Ss
+thomasfleet.international_625,International,625
+thomasfleet.international_7400,International,7400
+thomasfleet.international_7600_van_truck,International,7600 Van Truck
+thomasfleet.toyota_7hbw23,Toyota,7HBW23
+thomasfleet.hillsborough_8_car_carrier,Hillsborough,8 Car Carrier
+thomasfleet.toyota_8hbw23,Toyota,8HBW23
+thomasfleet.international_9200i,International,9200I
+thomasfleet.international_9200i_truck_tractor,International,9200I Truck Tractor
+thomasfleet.international_bluebird,International,BLUEBIRD
+thomasfleet.gmc_bluebird,GMC,BLUEBIRD
+thomasfleet.international_bluebird_large_bus,International,BLUEBIRD LARGE BUS
+thomasfleet.gmc_c5500_topkick,GMC,C5500 Topkick
+thomasfleet.freightliner_cascadia,Freightliner,Cascadia
+thomasfleet.freightliner_columbia,Freightliner,Columbia
+thomasfleet.freightliner_columbia_120,Freightliner,Columbia 120
+thomasfleet.mack_cxn613_vision,Mack,CXN613 VISION
+thomasfleet.wstrn_dempster,Wstrn,Dempster
+thomasfleet.trans_drop_deck,Trans,Drop Deck
+thomasfleet.tbd_drop_deck_trailer,TBD,Drop Deck Trailer
+thomasfleet.ford_e-150,Ford,E-150
+thomasfleet.ford_e-250,Ford,E-250
+thomasfleet.ford_e-350_club_wagon,Ford,E-350 Club Wagon
+thomasfleet.ford_e-350_super_duty,Ford,E-350 Super Duty
+thomasfleet.ford_e-350_hr_transit_van,Ford,E-350 HR Transit Van
+thomasfleet.corbeil_e-450,Corbeil,E-450
+thomasfleet.cadillac_escalade_esv,Cadillac,Escalade ESV
+thomasfleet.ford_escape,Ford,Escape
+thomasfleet.ford_expedition,Ford,Expedition
+thomasfleet.ford_explorer,Ford,Explorer
+thomasfleet.ford_f-150,Ford,F-150
+thomasfleet.ford_f-250_super_duty,Ford,F-250 Super Duty
+thomasfleet.ford_f-350_super_duty,Ford,F-350 Super Duty
+thomasfleet.ford_f-450_super_duty,Ford,F-450 Super Duty
+thomasfleet.ford_f-550_super_duty,Ford,F-550 Super Duty
+thomasfleet.ford_f-150,Ford,F-150
+thomasfleet.ford_f-150_4x2,Ford,F-150 4X2
+thomasfleet.ford_f-150_4x2_xl,Ford,F-150 4X2 Xl
+thomasfleet.ford_f-150_4x4,Ford,F-150 4X4
+thomasfleet.ford_f-250,Ford,F-250
+thomasfleet.ford_f-250_4x2,Ford,F-250 4X2
+thomasfleet.ford_f-250_4x4,Ford,F-250 4X4
+thomasfleet.ford_f-350,Ford,F-350
+thomasfleet.ford_f-450,Ford,F-450
+thomasfleet.ford_f-700,Ford,F-700
+thomasfleet.thruway_flat_deck,Thruway,Flat Deck
+thomasfleet.durabody_flat_deck,Durabody,Flat Deck
+thomasfleet.titan_flat_deck,Titan,Flat Deck
+thomasfleet.tridem_flat_deck,Tridem,Flat Deck
+thomasfleet.freightliner_fld120,Freightliner,Fld120
+thomasfleet.freightliner_fm2,Freightliner,Fm2
+thomasfleet.ford_focus,Ford,Focus
+thomasfleet.ford_fusion,Ford,Fusion
+thomasfleet.corbeil_international_3000_series,Corbeil,International 3000 Series
+thomasfleet.freightliner_m2,Freightliner,M2
+thomasfleet.freightliner_m2_106,Freightliner,M2 106
+thomasfleet.freightliner_m2_106_cab_&_chassis,Freightliner,M2 106 CAB & CHASSIS
+thomasfleet.freightliner_m2_106_straight_truck,Freightliner,M2 106 Straight Truck
+thomasfleet.titan_platform,Titan,Platform
+thomasfleet.ford_ranger,Ford,Ranger
+thomasfleet.gmc_savana_3500,GMC,Savana 3500
+thomasfleet.gmc_sierra_3500_hd,GMC,Sierra 3500 HD
+thomasfleet.wilson_step_deck,Wilson,Step Deck
+thomasfleet.wabash_step_deck,Wabash,Step Deck
+thomasfleet.western_star_tbd,Western Star,TBD
+thomasfleet.autocar_/_volvo_tbd,Autocar / Volvo,TBD
+thomasfleet.tbd_tbd,TBD,TBD
+thomasfleet.international_terrastar,International,Terrastar
+thomasfleet.freightliner_thomas_large_bus,Freightliner,Thomas Large Bus
+thomasfleet.wstrn_tractor,Wstrn,Tractor
+thomasfleet.thruway_trailer,Thruway,Trailer
+thomasfleet.ford_transit,Ford,Transit
+thomasfleet.tbd_transit,TBD,Transit
+thomasfleet.ford_transit_connect,Ford,Transit Connect
+thomasfleet.ford_transit-350,Ford,Transit-350
+thomasfleet.international_transtar,International,TranStar
+thomasfleet.manac_van_trailer,Manac,Van Trailer
+thomasfleet.util_van_trailer,Util,Van Trailer
+thomasfleet.trai_van_trailer,Trai,Van Trailer
+thomasfleet.tbd_van_trailer,TBD,Van Trailer
+thomasfleet.international_workstar_7600,International,WorkStar 7600
+thomasfleet.gmc_yukon,GMC,Yukon
+thomasfleet.gmc_yukon_xl_1500,GMC,Yukon XL 1500
+thomasfleet.ford_edge,Ford,Edge
+thomasfleet.big_tex_22g,Big Tex,22G
+thomasfleet.american_hauler_trailer,American Hauler,Trailer
+thomasfleet.freightliner_fl80,Freightliner,FL80
+thomasfleet.sterling_truck_lt8500,Sterling Truck,LT8500
+thomasfleet.chevrolet_cruze,Chevrolet,Cruze
+thomasfleet.gmc_yukon_xl,GMC,Yukon XL
+thomasfleet.dodge_grand_caravan,Dodge,Grand Caravan
+thomasfleet.ford_e-450_super_duty,Ford,E-450 Super Duty
+thomasfleet.walinga_bba,Walinga,BBA
+thomasfleet.chevrolet_silverado_3500_hd,Chevrolet,Silverado 3500 HD
+thomasfleet.nando_lds,Nando,LDS
+thomasfleet.seadoo_rxt_x260as,Seadoo,RXT X260AS
+thomasfleet.shorelander_seadoo_trailer,Shorelander,Seadoo Trailer
+thomasfleet.ford_transit-150,Ford,Transit-150
+thomasfleet.hyundai_sonata,Hyundai,Sonata
+thomasfleet.ford_transit-350_hd,Ford,Transit-350 HD
+thomasfleet.cf_moto_u-force_500,CF Moto,U-FORCE 500
+thomasfleet.can_am_commander_ma,Can AM,Commander MA
+thomasfleet.chevrolet_silverado_2500_hd,Chevrolet,Silverado 2500 HD
+thomasfleet.volvo_vn_series,Volvo,VN Series
+thomasfleet.mack_cxu613,Mack,CXU613
+thomasfleet.gmc_sierra_2500_hd,GMC,Sierra 2500 HD
+thomasfleet.gmc_sierra_1500,GMC,Sierra 1500
+thomasfleet.chevrolet_silverado_1500,Chevrolet,Silverado 1500
+thomasfleet.gmc_canyon,GMC,Canyon

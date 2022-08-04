@@ -1,0 +1,77 @@
+<odoo>
+    <data>
+
+        <record id="thomase_invoice_form" model="ir.ui.view">
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.move_form" />
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//button[@name='action_invoice_sent']" position="before">
+                        <button name="action_invoice_send_to_ar" type="object" string="Send to Thomas AR" class="oe_highlight o_invoice_send" groups="base.group_user"/>
+
+                    </xpath>
+                    <xpath expr="//field[@name='partner_id']" position="after">
+                        <field name="partner_shipping_id" context="{'default_type':'delivery'}" options='{"always_reload": True}' attr="{'invisible': [('partner_shipping_id','==',False)]}"/>
+                    </xpath>
+                    <xpath expr="//field[@name='partner_id']" position="after">
+                        <field name="po_number" />
+                        <field name="thomas_invoice_class"/>
+                        <field name="invoice_to"/>
+                        <field name="invoice_from"/>
+                        <field name="lease_ids" widget="many2many_tags"/>
+                        <field name="vehicle_ids">
+                            <tree>
+                                <field name="unit_no"/>
+                                <field name="brand_id"/>
+                                <field name="model_id"/>
+                                <field name="license_plate"/>
+                            </tree>
+                        </field>
+                    </xpath>
+                    <xpath expr="//tree/field[@name='sequence']" position="after">
+                        <field name="vehicle_id" context="{'lease':True}"/>
+                        <field name="reference" context="{'lease':True}"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+        <record id="thomase_invoice_tree" model="ir.ui.view">
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.move_tree" />
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='partner_id']" position="replace">
+                        <field name="partner_id" invisible="1" context="{'show_internal_division':True}" options="{'always_reload': True}"/>
+                        <field name="customer_name"/>
+                        <field name="units_display"/>
+                        <field name="gp_po_number"/>
+                        <field name="thomas_invoice_class"/>
+                        <field name="initial_invoice"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="thomas_view_account_invoice_filter" model="ir.ui.view">
+            <field name="name">thomas.invoice.select</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='partner_id']" position="replace">
+                        <field name="partner_id" string="Customer" context="{'show_internal_division':True}" operator="child_of" options="{'always_reload':True}"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+      
+        <record id="account.action_invoice_tree1" model="ir.actions.act_window">
+            <field name="name">Rental Invoices</field>
+            <field name="context">{'type':'out_invoice','show_internal_division':True, 'journal_type': 'sale', 'lease':True}</field>
+        </record>
+
+        <menuitem name="Customer Invoices" id="work_orders_main" sequence="2" groups="account.group_account_invoice"/>
+        <menuitem name="Rental Invoices" action="account.action_invoice_tree1" parent="work_orders_main" id="thomasfleet_workorder_menu" />
+
+    </data>
+</odoo>

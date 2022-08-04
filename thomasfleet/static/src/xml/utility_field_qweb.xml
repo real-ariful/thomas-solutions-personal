@@ -1,0 +1,7 @@
+<templates>
+    <t t-name="UtilityField">
+        <div class="oe_thomas_utility_field">
+            <p><t t-esc="widget.test()"/></p>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,71 @@
+<odoo>
+    <data>
+
+        <!--<delete model="ir.rule" id="fleet.fleet_rule_vehicle_visibility_user"/>-->
+        <record model="ir.module.category" id="module_category_shop">
+            <field name="name">Shop</field>
+            <field name="sequence">300</field>
+        </record>
+        <record model="ir.module.category" id="module_category_leasing">
+            <field name="name">Leasing</field>
+            <field name="sequence">301</field>
+        </record>
+        <record model="ir.module.category" id="module_category_leasing">
+            <field name="name">Accounting</field>
+            <field name="sequence">302</field>
+        </record>
+        <record id="group_thomasshop_user" model="res.groups">
+          <field name="name">User</field>
+               <field name="category_id" ref="module_category_shop"/>
+          <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record id="group_thomasshop_manager" model="res.groups">
+                 <field name="name">Manager</field>
+             <field name="category_id" ref="module_category_shop"/>
+          <field name="implied_ids" eval="[(4, ref('group_thomasshop_user'))]"/>
+          <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+        <record id="fleet_group_admin" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="implied_ids" eval="[(4, ref('fleet.fleet_group_manager'))]"/>
+            <field name="category_id" ref="fleet.module_fleet_category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+       <!-- <record id="group_thomasshop_manager" model="res.groups">
+              <field name="name">Administrator</field>
+             <field name="category_id" ref="module_category_shop"/>
+          <field name="implied_ids" eval="[(4, ref('group_thomasshop_user'))]"/>
+          <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>-->
+    </data>
+    <data noupdate="1">
+        <record id="fleet_rule_vehicle_visibility_user" model="ir.rule">
+            <field name="name">User can only see his/her vehicle</field>
+            <field name="model_id" ref="fleet.model_fleet_vehicle"/>
+            <field name="groups" eval="[(4, ref('fleet.fleet_group_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        <record id="fleet_rule_fuel_log_visibility_user" model="ir.rule">
+            <field name="name">Override Default Fleet Rule</field>
+            <field name="model_id" ref="fleet.model_fleet_vehicle_log_fuel"/>
+            <field name="groups" eval="[(4, ref('fleet.fleet_group_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        <record id="fleet_rule_odometer_visibility_user" model="ir.rule">
+            <field name="name">User all rights on vehicle's vehicle's odometer</field>
+            <field name="model_id" ref="fleet.model_fleet_vehicle_odometer"/>
+            <field name="groups" eval="[(4, ref('fleet.fleet_group_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

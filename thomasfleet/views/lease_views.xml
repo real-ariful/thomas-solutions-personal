@@ -1,0 +1,388 @@
+<odoo>
+    <data>
+          <record id='lease_invoice_wizard_form' model='ir.ui.view'>
+            <field name='name'>Rental Invoice wizard form view</field>
+            <field name='model'>thomaslease.lease.invoice.wizard</field>
+            <field name='arch' type='xml'>
+                <form string="Generate Rental Invoices">
+                    <sheet>
+                        <group>
+                            <field name="invoice_date"/>
+                            <field name="invoice_due_date"/>
+                            <field name='lease_ids'>
+                                <tree editable="top">
+                                    <field name="lease_number"/>
+                                    <field name="unit_no"/>
+                                    <field name="customer_id"/>
+                                    <field name="invoice_due_date"/>
+                                    <field name="invoice_from" class="oe_inline"/>
+                                    <field name="invoice_to" class="oe_inline"/>
+                                </tree>
+                            </field>
+                            </group>
+                    </sheet>
+                    <footer>
+                        <button name='record_lease_invoices'
+                                string='OK'
+                                class='btn-primary'
+                                type='object'/>
+                        <button string='Cancel'
+                                class='btn-default'
+                                special='cancel'/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id='lease_return_wizard_form' model='ir.ui.view'>
+            <field name='name'>Rental Return wizard form view</field>
+            <field name='model'>thomaslease.lease.return.wizard</field>
+            <field name='arch' type='xml'>
+                <form string="Rental Return">
+                    <sheet>
+                        <group>
+                            <field name="lease_return_date"/>
+                            <field name="invoice_pending"/>
+                            <field name="repairs_pending"/>
+                            <field name='lease_ids'>
+                                <tree>
+                                    <field name="unit_no"/>
+                                    <field name="customer_id"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name='record_return'
+                                string='OK'
+                                class='btn-primary'
+                                type='object'/>
+                        <button string='Cancel'
+                                class='btn-default'
+                                special='cancel'/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="open_lease_return_wizard_action" model="ir.actions.act_window">
+            <field name="name">Rental Return Wizard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">thomaslease.lease.return.wizard</field>
+            <field name="view_id" ref="lease_return_wizard_form"></field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record id="open_lease_invoice_wizard_action" model="ir.actions.act_window">
+            <field name="name">Rental Invoice Wizard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">thomaslease.lease.invoice.wizard</field>
+            <field name="view_id" ref="lease_invoice_wizard_form"></field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+        <record id='thomaslease_lease_view_form' model='ir.ui.view'>
+            <field name="name">thomaslease.lease.form</field>
+            <field name="model">thomaslease.lease</field>
+            <field name="arch" type="xml">
+                <form string="Rental Agreements">
+                    <header>
+                        <button name="lease_print" class="btn-primary" string="Print" type="object"/>
+                        <button name="btn_validate" class="oe_highlight" string="Rent" type="object" groups="fleet.fleet_group_manager"/>
+                        <button name="%(open_lease_invoice_wizard_action)d" class="btn-primary" string="Invoice"
+                                type="action" groups="account.group_account_invoice"/>
+                        <button name="%(open_lease_return_wizard_action)d" class="btn-primary" string="Return"
+                                type="action" groups="fleet.fleet_group_manager"/>
+                        <field name="state" clickable="True" widget="statusbar"
+                               statusbar_colors="{'draft':'yellow','active':'green', 'closed':'black'}"
+                               statusbar_visible="draft,active,closed"/>
+
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-check-square">
+                                     <field name="active" widget="boolean_button" options='{"terminology": {
+                                    "string_true": "Current",
+                                    "hover_true": "Archive",
+                                    "string_false": "Archived",
+                                    "hover_false": "Restore"
+                                }}'/>
+                            </button>
+                        </div>
+                        <group>
+                            <div colspan="4" class="oe_title">
+                                <h1>
+                                    <field name="lease_number" class="oe_read_only"/>
+                                    <br/>
+                                    <field name="unit_slug" context="{'lease':True}"/>
+                                </h1>
+                            </div>
+                            <group colspan="4">
+                                <group string="Unit">
+                                    <field name="vehicle_id" context="{'lease':True}"/>
+                                    <field name="inclusions" widget="many2many_tags">
+                                    </field>
+                                    <field name="accessories" widget="many2many_tags">
+                                    </field>
+                                    <field name="transponder_id"
+                                           context="{'lease':True ,'default_vehicle_id':vehicle_id, 'default_name':'Transponder', 'default_type':12}"></field>
+                                </group>
+                                <group string="Customer Details">
+                                    <field name="customer_id"  context="{'show_internal_division':True}" options="{'no_create': True,'always_reload': True}" />
+                                    <field name="ap_contact_ids" options="{'no_open':True, 'no_create':True}" widget="many2many_tags"/>
+                                    <field name="po_contact_ids" options="{'no_open':True, 'no_create':True}"  widget="many2many_tags"/>
+                                    <field name="ops_contact_ids" options="{'no_open':True, 'no_create':True}" widget="many2many_tags"/>
+                                    <field name="partner_invoice_id"  options="{'no_create': True,'always_reload': True}" />
+                                    <field name="partner_shipping_id" options="{'no_create': True,'always_reload': True}"/>
+                                    <field name="driver_id" options="{'no_open':True, 'no_create': True}"/>
+                                    <field name="rate_type"/>
+                                    <field name="last_invoice_date" />
+                                </group>
+                            </group>
+                        </group>
+                        <notebook col="4">
+                            <page string="Rental">
+                                <group col="4">
+                                    <group style="margin-bottom:0px"   string="Details">
+                                        <field name="lease_start_date"/>
+                                        <field name="billing_start_date"/>
+                                        <field name="min_lease_end_date"/>
+                                        <field name="monthly_mileage"/>
+                                        <field name="mileage_overage_rate"/>
+                                        <field name="po_number"/>
+                                        <field name="po_comments"/>
+                                    </group>
+                                    <group style="margin-bottom:0px" string="Outgoing">
+                                        <field name="outgoing_inspector" options="{'no_open':True, 'no_create_edit': True}"/>
+                                        <field name="inspection_notes"/>
+                                        <field name="lease_out_odometer_id"
+                                               context="{'lease':True , 'default_activity':'lease_out', 'default_vehicle_id':vehicle_id, 'default_lease_id':active_id}"/>
+                                        <field name="mileage_at_lease" invisible="1"/>
+                                        <field name="fuel_at_lease"/>
+                                     </group>
+                                    <group style="margin-bottom:0px"  string="Return">
+                                         <field name="lease_return_date"/>
+                                        <field name="incoming_inspector" options="{'no_open':True, 'no_create_edit': True}"/>
+                                        <field name="lease_return_odometer_id"
+                                               context="{'lease':True , 'default_activity':'lease_in', 'default_vehicle_id':vehicle_id, 'default_lease_id':active_id}"/>
+                                        <field name="mileage_at_return" invisible="1"/>
+                                        <field name="fuel_at_return"/>
+                                     </group>
+                                    <group style="margin-bottom:0px" string="Billing">
+                                        <field name="run_initial_invoicing"/>
+                                        <field name="requires_manual_calculations"/>
+                                        <field name="discount_rate_calc"/>
+                                        <field name="preferred_payment"/>
+                                        <field name="other_payment" attrs="{'invisible': [('preferred_payment','!=','other')]}"/>
+                                        <field name="additional_charges"/>
+                                        <field name="additional_billing"/>
+                                        <field name="delivery_charge"/>
+                                        <field name ="pickup_charge"/>
+                                        <field name="billing_notes"/>
+
+                                   </group>
+                                    <group style="margin-top:0px" colspan="3">
+                                        <field colspan="3" name="lease_notes"/>
+                                    </group>
+                                </group>
+
+                                <field name="lease_lines">
+                                    <tree editable="bottom">
+                                        <field name="product_id"  options="{'no_open':True, 'no_create': True}"></field>
+                                        <field name="vehicle_id" readonly="True"/>
+                                        <field name="description"></field>
+                                        <field name="price"></field>
+                                        <field name="monthly_rate" options="{'currency_field': 'currency_id'}"/>
+                                        <field name="weekly_rate" options="{'currency_field': 'currency_id'}"/>
+                                        <field name="daily_rate" options="{'currency_field': 'currency_id'}"/>
+                                        <field name="tax_id"></field>
+                                        <field name="tax_amount"></field>
+                                        <field name="total"></field>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="lease_total">
+                                    <field name="monthly_rate" widget='monetary'
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <field name="monthly_tax" widget='monetary'
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="monthly_total"/>
+                                    </div>
+                                    <field name="monthly_total" nolabel="1" class="oe_subtotal_footer_separator"
+                                           widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                                <group>
+                                    <field name="rate_calc_description" />
+                                    <field name="rate_calc_example"/>
+                                </group>
+                            </page>
+                            <page string="Customer Insurance Details">
+                                <group colspan="4">
+
+                                    <field name="insurance_on_file" readonly="True"/>
+                                    <field name="insurance_agent" readonly="True"/>
+                                    <field name="insurance_underwriter" readonly="True"/>
+                                    <field name="insurance_policy" readonly="True"/>
+                                    <field name="insurance_expiration" readonly="True"/>
+
+                                </group>
+                            </page>
+                            <page string="Invoices" groups="account.group_account_invoice">
+                                <field name="invoice_ids" context="{'type':'out_invoice', 'journal_type': 'sale'}" options="{'no_create': True}" readonly="1">
+                                    <tree decoration-info="state == 'draft'" decoration-muted="state == 'cancel'"
+                                          string="Invoice">
+                                        <field name="partner_id" groups="base.group_user" string="Customer"/>
+                                        <field name="invoice_date"/>
+                                        <field name="number"/>
+                                        <field name="commercial_partner_id" invisible="1"/>
+                                        <field name="reference" invisible="1"/>
+                                        <field name="name" invisible="1"/>
+                                        <field name="journal_id" invisible="1"/>
+                                        <field name="company_id" groups="base.group_multi_company"
+                                               options="{'no_create': True}"/>
+                                        <field name="user_id"/>
+                                        <field name="date_due"/>
+                                        <field name="origin"/>
+                                        <field name="amount_total_signed" string="Total" sum="Total"/>
+                                        <field name="residual_signed" string="Amount Due" sum="Amount Due"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="company_currency_id" invisible="1"/>
+                                        <field name="state"/>
+                                        <field name="type"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread" options='{"thread_level": 1}'/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id='thomaslease_lease_view_tree' model='ir.ui.view'>
+            <field name="name">thomaslease.lease.tree</field>
+            <field name="model">thomaslease.lease</field>
+            <field name="arch" type="xml">
+                <tree string="Rental Agreements">
+                    <field name="active" invisible="1"/>
+                    <field name="vehicle_id" context="{'lease':True}"/>
+                    <field name="requires_manual_calculations"/>
+                    <field name="customer_id" invisible="1" context="{'show_internal_division':True}" options="{'always_reload': True}"/>
+                    <field name="customer_name"/>
+                    <field name="lease_start_date"/>
+                    <field name="lease_return_date" string="Unit Returned On"/>
+                    <field name="transponder_id"/>
+                    <field name="additional_charges"/>
+                    <field name="po_number"/>
+                    <field name="rate_type"/>
+                    <field name="monthly_rate" widget="monetary" string="Rate"/>
+                    <field name="preferred_payment"/>
+                    <field name="state"/>
+                    <field name="run_initial_invoicing"/>
+                    <field name="last_invoice_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id='thomaslease_lease_view_kanban' model='ir.ui.view'>
+            <field name="name">thomaslease.lease.kanban</field>
+            <field name="model">thomaslease.lease</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div>
+                                    <strong>
+                                        <field name="vehicle_id" context="{'lease':True}"/>
+                                        <field name="customer_id" invisible="1" context="{'show_internal_division':True}" options="{'always_reload':True}" domain="[('is_company', '=', True)]"/>
+                                        <field name="customer_name"/>
+
+                                    </strong>
+                                </div>
+                                <div>
+                                    <span class="pull-right">
+                                        <field name="lease_number"/>
+                                        Km
+                                    </span>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id='thomaslease_lease_view_search' model='ir.ui.view'>
+            <field name="name">thomaslease.lease.search</field>
+            <field name="model">thomaslease.lease</field>
+            <field name="arch" type="xml">
+                <search string="Rental Agreements">
+                    <field name="vehicle_id" context="{'lease':True}"/>
+                    <field name="customer_id" context="{'show_internal_division':True}"  options="{'always_reload':True}" domain="[('is_company', '=', True)]"/>
+                    <field name="lease_number"/>
+                    <field name="po_number"/>
+                    <separator/>
+                    <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="groupby_vehicle_id" context="{'group_by' : 'vehicle_id'}" string="Vehicle"/>
+                        <filter name="groupby_customer" context="{'group_by' : 'customer_id'}" string="Customer"/>
+                        <filter name="groupby_po_number" context="{'group_by' : 'po_number'}" string="PO Number"/>
+                        <filter name="groupby_last_invoice_date" context="{'group_by' : 'last_invoice_date'}"
+                                string="Last Invoice Date"/>
+                        <filter name="groupby_additional_charges" context="{'group_by' : 'additional_charges'}"
+                                string="Additional Charges"/>
+                        <filter name="groupby_lease_status" context="{'group_by' : 'state'}"
+                                string="Rental Status"/>
+                        <filter name="groupby_payment_method" context="{'group_by' : 'preferred_payment'}"
+                                string="Payment Method"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id='thomaslease_lease_action' model='ir.actions.act_window'>
+            <field name="name">Rental Agreements</field>
+            <field name="res_model">thomaslease.lease</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="limit">500</field>
+            <field name="context">{'lease' : True, 'show_internal_division':True}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a lease agreement.
+                </p>
+            </field>
+        </record>
+
+        <act_window name="Generate Rental Invoices"
+                    res_model="thomaslease.lease.invoice.wizard"
+                    src_model="thomaslease.lease"
+                    view_mode="form"
+                    multi="True"
+                    key2="client_action_multi"
+                    id="action_generate_lease_invoices"
+        />
+        <act_window name="Rental Return"
+                    res_model="thomaslease.lease.return.wizard"
+                    view_mode="form"
+                    target="new"
+                    key2="client_action_multi"
+                    id="action_open_lease_return"
+        />
+
+
+        <menuitem name="Rental Agreements" id="lease_agreements_main" sequence="2"/>
+
+        <menuitem name="Rental Agreements" action="thomaslease_lease_action" parent="lease_agreements_main"
+                  id="thomaslease_lease_menu"/>
+         <menuitem action="open_lease_return_wizard_action" parent="thomaslease_lease_menu"
+                  id="thomaslease_return_menu"/>
+
+
+    </data>
+</odoo>

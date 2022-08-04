@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="thomaslease_message_view" model="ir.ui.view">
+            <field name="name">thomaslease.message.form</field>
+            <field name="model">thomaslease.message</field>
+            <field name="arch" type="xml">
+                <form string="Information">
+                    <field name="message" />
+                    <footer>
+                        <button string="OK" special="cancel" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
