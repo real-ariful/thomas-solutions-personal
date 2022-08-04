@@ -173,19 +173,6 @@ class ThomasLease(models.Model):
         else:
             self.partner_shipping_id = addr.get('contact')
 
-    '''
-    @api.model
-    @api.depends('customer_id')
-    def default_shipping_address(self):
-        addr = self.customer_id.address_get(['delivery'])
-        return addr['delivery']
-
-    @api.model
-    @api.depends('customer_id')
-    def default_invoice_address(self):
-        addr = self.customer_id.address_get(['invoice'])
-        return addr['invoice']
-    '''
 
     @api.model
     def btn_validate(self):
@@ -201,6 +188,7 @@ class ThomasLease(models.Model):
         return self.env.ref('thomasfleet.lease_agreement').report_action(self)
 
     _name = 'thomaslease.lease'
+
     active = fields.Boolean('Active', default=True, track_visibility="onchange")
     lease_number = fields.Char('Rental ID', tracking=True)
     po_number = fields.Char("Purchase Order #", tracking=True)

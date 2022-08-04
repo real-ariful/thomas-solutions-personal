@@ -16,6 +16,7 @@ def dump_obj(obj):
 
 class ThomasAsset(models.Model):
     _name = 'thomas.asset'
+    _description = 'Thomas Asset'
 
     unit_no = fields.Char('Unit #', tracking=True)
     notes = fields.Text('Notes', tracking=True)
@@ -44,6 +45,8 @@ class ThomasAsset(models.Model):
 
 class ThomasAssetPhotoSet(models.Model):
     _name = 'thomasfleet.asset_photo_set'
+    _description = 'Thomas Asset Photo Set'
+
     vehicle_id = fields.Many2one('fleet.vehicle', 'Vehicle')
     photoDate = fields.Date("Date")
     photos = fields.One2many('thomasfleet.asset_photo', 'photo_set_id', 'Photos')
@@ -60,6 +63,8 @@ class ThomasAssetPhotoSet(models.Model):
 
 class ThomasAssetPhoto(models.Model):
     _name = 'thomasfleet.asset_photo'
+    _description = 'Thomas Asset Photo'
+
     photo_set_id = fields.Many2one('thomasfleet.asset_photo_set', 'PhotoSet')
     position = fields.Selection([('driver side', 'Driver Side'), ('passenger side', 'Passenger Side'),
                                  ('front', 'Front'),('back', 'Back'),
@@ -91,13 +96,15 @@ class ThomasAssetPhoto(models.Model):
         return super(ThomasAssetPhoto, self).write(vals)
 
 class ThomasFleetVehicle(models.Model):
-    _name = 'fleet.vehicle'
+    # _name = 'fleet.vehicle'
+    _description = 'Thomas Fleet Vehicle'
     _inherit = ['thomas.asset', 'fleet.vehicle']
     _order = "unit_int asc"
 
     log = logging.getLogger('thomas')
     log.setLevel(logging.INFO)
     unit_int = fields.Integer(compute='_getInteger', store=True)
+    tag_ids = fields.Many2many('fleet.vehicle.tag', 'fleet_vehicle_vehicle_tag_rel_new', 'vehicle_tag_id', 'tag_id', 'Tags', copy=False)
 
     def default_unit_no(self):
         last_vehicle = self.env['fleet.vehicle'].search([], limit=1, order='unit_int desc')
@@ -259,12 +266,6 @@ class ThomasFleetVehicle(models.Model):
                 rec.revenue_to_date += line.price_total
             rec.revenue_to_date += rec.historical_revenue
 
-        #lines = self.env['account.move.line']
-        #for rec in self:
-        #    the_lines = lines.search([('vehicle_id', '=', rec.id)])
-        #    for line in the_lines:
-        #        rec.revenue_to_date += line.price_total
-        #    rec.revenue_to_date = rec.revenue_to_date + rec.historical_revenue
 
     # accessories = fields.Many2many()
     @api.depends('revenue_to_date', 'maintenance_cost_to_date','total_maintenance_cost_to_date','all_cost' )
@@ -361,27 +362,6 @@ class ThomasFleetVehicle(models.Model):
             res_id=rec.id
         )
         return res
-        # return {
-        #
-        #     'name': 'Update Protractor',
-        #
-        #     'type': 'ir.actions.act_window',
-        #
-        #     'res_model': 'thomaslease.message',
-        #
-        #     'res_id': rec.id,
-        #
-        #     'ok_handler': self.ok_pressed,
-        #
-        #     'view_mode': 'form',
-        #
-        #     'view_type': 'form',
-        #
-        #     'target': 'new'
-        #
-        # }
-
-
 
     def update_protractor(self):
         url = " "
@@ -853,11 +833,6 @@ class ThomasFleetVehicle(models.Model):
                 print(" DELETING INVOICE:::" + str(work_order.id))
                 work_order.unlink()
 
-        #for rec in self:
-        #    if rec.protractor_workorders:  # don't add invoices right now if there are some
-        #        for inv in rec.protractor_workorders:
-        #            print(" DELETING INVOICE:::" + str(inv.invoiceNumber))
-        #            inv.unlink()
 
         wo = self.env['thomasfleet.workorder']
         wos = wo._create_protractor_workorders_for_unit(self.id,self.protractor_guid)
@@ -876,6 +851,8 @@ class ThomasFleetVehicle(models.Model):
 
 class ThomasFleetOdometer(models.Model):
     _inherit= 'fleet.vehicle.odometer'
+    _description = 'Thomas Fleet Odometer'
+
     lease_id = fields.Many2one('thomaslease.lease', 'Rental Agreement')
     customer_id =fields.Many2one(related="lease_id.customer_id", string="Customer", readonly=True)
     activity = fields.Selection([('lease_out', 'Rent Start'), ('lease_in', 'Rent Return'),('service', 'Service'),('spare_swap', 'Spare Swap'), ('spare_swap_back','Spare Swap Back')], string="Activity", tracking=True)
@@ -893,6 +870,7 @@ class ThomasFleetOdometer(models.Model):
 
 class ThomasFleetVehicleModel(models.Model):
     _inherit = 'fleet.vehicle.model'
+    _description = 'Thomas Fleet Vehicle Model'
 
     name = fields.Char('Model name', required=True)
     trim_id = fields.One2many('thomasfleet.trim', 'model_id', 'Available Trims')
@@ -911,6 +889,8 @@ class ThomasFleetVehicleModel(models.Model):
 
 class ThomasFleetTrim(models.Model):
     _name = 'thomasfleet.trim'
+    _description = 'Thomas Fleet Trim'
+
 
     name = fields.Char('Trim Name')
     description = fields.Char('Description')
@@ -919,16 +899,18 @@ class ThomasFleetTrim(models.Model):
     model_id = fields.Many2one('fleet.vehicle.model', required=True, string='Model', help='Model of the vehicle',
                                domain="[('brand_id','=',brand_id)]")
 
-    #model_name = fields.Char(related='model_id.name')
-    #make_name = fields.Char(related='model_id.brand_id.name')
 
 class ThomasFleetLeaseStatus(models.Model):
     _name = 'thomasfleet.lease_status'
+    _description = 'Thomas Fleet Lease Status'
+
+
     name = fields.Char('Rental Status')
     description = fields.Char('Description')
 
 class ThomasFleetLocation(models.Model):
     _name = 'thomasfleet.location'
+    _description = 'Thomas Fleet Location'
 
     name = fields.Char('Location')
     description = fields.Char('Description')
@@ -936,6 +918,7 @@ class ThomasFleetLocation(models.Model):
 
 class ThomasFleetSeatMaterial(models.Model):
     _name = 'thomasfleet.seatmaterial'
+    _description = 'Thomas Fleet Seat Material'
 
     name = fields.Char('Seat Material')
     description = fields.Char('Description')
@@ -943,12 +926,15 @@ class ThomasFleetSeatMaterial(models.Model):
 
 class ThomasFleetFloorMaterial(models.Model):
     _name = 'thomasfleet.floormaterial'
+    _description = 'Thomas Fleet Floor Material'
+
     name = fields.Char('Floor Material')
     description = fields.Char('Description')
 
 
 class ThomasFleetFuelType(models.Model):
     _name = 'thomasfleet.fueltype'
+    _description = 'Thomas Fleet Fuel Type'
 
     name = fields.Char('Fuel Type')
     description = fields.Char('Description')
@@ -956,6 +942,7 @@ class ThomasFleetFuelType(models.Model):
 
 class ThomasFleetAssetClass(models.Model):
     _name = 'thomasfleet.asset_class'
+    _description = 'Thomas Fleet Asset Class'
 
     name = fields.Char('Asset Class')
     description = fields.Char('Description')
@@ -963,12 +950,14 @@ class ThomasFleetAssetClass(models.Model):
 
 class ThomasFleetInsuranceClass(models.Model):
     _name = 'thomasfleet.insurance_class'
+    _description = 'Thomas Fleet Insurance Class'
 
     name = fields.Char('Insurance Class')
     description = fields.Char('Description')
 
 class ThomasFleetInclusions(models.Model):
     _name = 'thomasfleet.inclusions'
+    _description = 'Thomas Fleet Inclusions'
 
     name = fields.Char('Inclusion')
     description = fields.Char('Description')
@@ -977,12 +966,14 @@ class ThomasFleetInclusions(models.Model):
 
 class ThomasFleetWorkOrderIndex(models.Model):
     _name = 'thomasfleet.workorder_index'
+    _description = 'Thomas Fleet Work Order Index'
 
     invoice_number = fields.Integer("Invoice Number")
     protractor_guid = fields.Char("Protractor GUID")
 
 class ThomasFleetJournalItemWizard(models.TransientModel):
     _name = 'thomasfleet.journal_item.wizard'
+    _description = 'Thomas Fleet Journal Item Wizard'
 
     @api.model
     def delete_all_journal_items(self):
@@ -1033,66 +1024,7 @@ class ThomasFleetJournalItemWizard(models.TransientModel):
 
 class ThomasFleetJournalItem(models.Model):
     _name = 'thomasfleet.journal_item'
-
-    '''
-    def init(self):
-
-        print("INITIALIZING")
-
-        wo_orders = self.env['thomasfleet.workorder'].search([])
-        for wo_s in wo_orders:
-            print("Deleting Work Orders")
-            wo_s.unlink()
-
-        units = self.env['fleet.vehicle'].search([('fleet_status', '!=', 'DISPOSED')])
-        wo = self.env['thomasfleet.workorder']
-        for unit in units:
-            if unit.vin_id:
-                print("Updating Unit: " + str(unit.unit_no) + " : " + str(unit.vin_id))
-                wo._create_protractor_workorders_for_unit(unit.id, unit.protractor_guid)
-                print("Created WorkOrders")
-            else:
-                print("NOT UPDATING Unit: " + str(unit.unit_no) + " : " + str(unit.protractor_guid))
-
-
-
-        jitems = self.env['thomasfleet.journal_item'].search([])
-        for jit in jitems:
-            jit.unlink()
-            print("Deleting")
-        iCount = 0
-
-
-
-        inv_lines = self.env['account.move.line'].search([])
-        journal_item = self.env['thomasfleet.journal_item']
-
-        while iCount < 200:
-           journal_item.create( {'transaction_date' : inv_lines[iCount].invoice_date,
-             'type': 'revenue',
-             'revenue':inv_lines[iCount].price_subtotal,
-             'invoice_line_id': inv_lines[iCount].id,
-             'vehicle_id': inv_lines[iCount].vehicle_id.id,
-             'product_id' : inv_lines[iCount].lease_line_id.product_id.id,
-             'customer_id': inv_lines[iCount].invoice_id.partner_id.id
-            })
-           iCount = iCount+1
-
-        iCount = 0
-        wo_orders = self.env['thomasfleet.workorder'].search([])
-
-        while iCount < 200:
-           journal_item.create({'transaction_date':wo_orders[iCount].invoiceDate,
-             'type': 'expense',
-             'expense': wo_orders[iCount].netTotal,
-             'work_order_id':wo_orders[iCount].id,
-             'vehicle_id': wo_orders[iCount].vehicle_id.id,
-             'product_id': wo_orders[iCount].product_id.id,
-             'customer_id': wo_orders[iCount].customer_id.id
-            })
-           iCount = iCount+1
-    '''
-
+    _description = 'Thomas Fleet Journal Item'
 
     def createJournalItemsForUnit(self,unit_id):
 
@@ -1171,13 +1103,16 @@ class ThomasFleetJournalItem(models.Model):
 
 class ThomasFleetWorkOrder(models.Model):
     _name = 'thomasfleet.workorder'
+    _description = 'Thomas Fleet Work Order'
+
+
     _res = []
     vehicle_id = fields.Many2one('fleet.vehicle', 'Vehicle')
     customer_id = fields.Many2one('res.partner', 'Customer')
     product_id = fields.Many2one('product.product', 'Product')
     unit_no = fields.Char(related='vehicle_id.unit_no', string="Unit #")
     workorder_details = fields.One2many('thomasfleet.workorder_details', 'workorder_id',  'Work Order Details')
-    protractor_guid = fields.Char('Protractor GUID',related='vehicle_id.protractor_guid')
+    protractor_guid = fields.Char('Protractor GUID', related='vehicle_id.protractor_guid')
     invoiceTime = fields.Datetime('Invoice Time')
     invoiceDate = fields.Datetime('Invoice Date')
     workOrderTime = fields.Datetime('WorkOrder Time')
@@ -1197,101 +1132,6 @@ class ThomasFleetWorkOrder(models.Model):
     rnmTotal = fields.Float('RnM Total', compute="_compute_rnm_total")
     invoice_guid = fields.Char('Invoice Guid')
 
-
-
-    '''
-    def read(self, fields = None, load = '_classic_read' ):
-        print("Read")
-        #wo_index_rec = self.env['thomasfleet.workorder_index']
-        #theID = arg[0]
-        #index = wo_index_rec.search([('invoice_number', '=', theID)], limit=1)
-       # print("The Invoice GUID " + str(index.protractor_guid))
-        # mod = super(ThomasFleetWorkOrder, self).read(fields, load)
-        self.protractor_guid = "abc"
-        return [self]
-
-    def browse(self, arg=None, prefetch=None):
-        print("Browse")
-        wo_index_rec = self.env['thomasfleet.workorder_index']
-        theID = arg[0]
-        index = wo_index_rec.search([('invoice_number', '=', theID)],limit=1)
-        print("The Invoice GUID " + str(index.protractor_guid))
-        #mod = super(ThomasFleetWorkOrder, self).read(fields, load)
-        return 
-        
-          return {'id': self.id, 'invoice_guid': str(index.protractor_guid), 'invoiceTime': '',
-                 'invoiceDate': '', 'workOrderTime': '', 'workOrderDate': '', 'technichan': 'Me',
-                 'serviceAdvisor': 'You', 'lastModifiedBy': '',
-                 'workOrderNumber': 'FB', 'workflowStage': 'FUB', 'invoiceNumber': 'ABCD', 'partsTotal': 1.00,
-                 'subletTotal': 1.00, 'grandTotal': 1.00,
-                 'laborTotal': 1.00, 'netTotal': 2.00}
-   
-     return [{'id': theID, 'invoice_guid': str(index.protractor_guid),'invoiceTime':'',
-    'invoiceDate':'', 'workOrderTime':'','workOrderDate':'','technichan':'Me','serviceAdvisor':'You','lastModifiedBy':'',
-    'workOrderNumber':'FB','workflowStage':'FUB','invoiceNumber':'ABCD','partsTotal':1.00, 'subletTotal':1.00, 'grandTotal':1.00,
-    'laborTotal':1.00,'netTotal':2.00}]
-
-    def search_count(self, args):
-        print("Search Count")
-        if len(args) == 1:
-            return super(ThomasFleetWorkOrder, self.with_context(checkDB=True)).search_count(args)
-        else:
-            if len(args) == 2:
-                guid = args[1][2]
-                wos = self._get_protractor_workorders_for_unit(guid)
-            else:
-                wos = self._get_protractor_workorders()
-            return len(wos)
-'''
-    '''
-    @api.model
-    def search(self, args, offset=0, limit=None, order=None, count=False):
-        print("Search")
-        if self._context.get('loadFromProtractor'):
-            guid = args[1][2]
-            wos = self._get_protractor_workorders_for_unit(guid)
-        else:
-            wos = super(ThomasFleetWorkOrder, self).search(args,offset,limit,order,count)
-        return wos
- 
-        if len(args) == 3:
-            return super(ThomasFleetWorkOrder, self.with_context(checkDB=True)).search(args,offset,limit,order,count)
-        else:
-            if len(args) == 2:
-                guid = args[1][2]
-                wos = self._get_protractor_workorders_for_unit(guid)
-            else:
-                wos = self._get_protractor_workorders()
-            if offset > 0:
-               return wos[offset:(offset + limit)]
-            else:
-               return wos  # [{'id':'test','invoiceDate':'test'}]
-        '''
-
-    '''
-    @api.model
-    def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
-        print("Search Read")
-        if self._context.get('loadFromProtractor'):
-            guid = domain[1][2]
-            wos = self._get_protractor_workorders_for_unit(guid)
-        else:
-            wos = super(ThomasFleetWorkOrder, self).searc_read(domain, fields, offset, limit, order)
-        return wos
-   
-        if len(domain) == 3:
-            return super(ThomasFleetWorkOrder, self.with_context(checkDB=True)).search_read(domain,fields,offset,limit,order)
-        else:
-            if len(domain) == 2:
-                guid = domain[1][2]
-                wos = self._get_protractor_workorders_for_unit(guid)
-            else:
-                wos = self._get_protractor_workorders()
-            if offset > 0:
-                return wos[offset:(offset+limit)]
-            else:
-                return wos  # [{'id':'test','invoiceDate':'test'}]
-    '''
     def _compute_rnm_total(self):
         for rec in self:
             rec.rnmTotal = rec.netTotal + rec.otherChargeTotal
@@ -1331,17 +1171,7 @@ class ThomasFleetWorkOrder(models.Model):
         # recs = inv_det_model.search(['invoice_id','=', self.id])
 
         sp_lines = []
-        '''
-        for r in recs:
-            r.unlink()
 
-        inv_det_line_model = self.env['thomasfleet.invoice_details_line']
-
-        l_recs = inv_det_line_model.search(['invoice_id','=', self.id])
-
-        for l in l_recs:
-            l.unlink()
-        '''
 
         work_order_num = data['WorkOrderNumber']
         inv_num = data['InvoiceNumber']
@@ -1410,17 +1240,6 @@ class ThomasFleetWorkOrder(models.Model):
         #recs = inv_det_model.search(['invoice_id','=', self.id])
 
         sp_lines = []
-        '''
-        for r in recs:
-            r.unlink()
-
-        inv_det_line_model = self.env['thomasfleet.invoice_details_line']
-
-        l_recs = inv_det_line_model.search(['invoice_id','=', self.id])
-
-        for l in l_recs:
-            l.unlink()
-        '''
 
         work_order_num = data['WorkOrderNumber']
         inv_num = data['InvoiceNumber']
@@ -1464,15 +1283,6 @@ class ThomasFleetWorkOrder(models.Model):
             inv_detail['workorder_line_items']= sp_lines
             self.workorder_details = [(0, 0, inv_detail)]
 
-
-            #inv_det_model.create(inv_detail)
-            #i_details = []
-            #i_details.append((0,0,the_details))
-
-
-            #self.update({'invoice_details': inv_detail})
-
-        # @api.model
 
 
     def thomas_workorder_form_action(self):
@@ -1739,6 +1549,8 @@ class ThomasFleetWorkOrder(models.Model):
 
 class ThomasFleetWorkOrderDetails(models.Model):
     _name = 'thomasfleet.workorder_details'
+    _description = 'Thomas Fleet Work Order Details'
+
     workorder_id = fields.Many2one('thomasfleet.workorder', 'Work Order')
     workorder_line_items = fields.One2many('thomasfleet.workorder_details_line', 'workorder_details_id', 'Work Order Details Line')
     invoice_number = fields.Char('Invoice Number')
@@ -1753,14 +1565,6 @@ class ThomasFleetWorkOrderDetails(models.Model):
 
     @api.model
     def act_get_invoice_details_line(self):
-        #for rec in self:
-            #if rec.line_items:  # don't add invoices right now if there are some
-                #for inv_item in rec.line_items:
-                    #print("Unlinking INVOICE:::" + str(inv_item.invoice_guid))
-                    #inv_item.unlink()
-            #self.ensure_one()
-        #self.get_invoice_details()
-
         res = self.env['ir.actions.act_window'].for_xml_id('thomasfleet', 'thomas_workorder_details_line_action')
         res.update(
             context=dict(self.env.context, default_invoice_id = self.id, search_default_parent_false=True),
@@ -1772,6 +1576,8 @@ class ThomasFleetWorkOrderDetails(models.Model):
 
 class ThomasFleetWorkOrderDetailsLine(models.Model):
     _name = 'thomasfleet.workorder_details_line'
+    _description = 'Thomas Fleet Work Order Details Line'
+
     workorder_details_id = fields.Many2one('thomasfleet.workorder_details', 'WorkOrder Details')
     complete = fields.Boolean('Complete')
     rank = fields.Integer('Rank')
@@ -1798,17 +1604,14 @@ class ThomasFleetWorkOrderDetailsLine(models.Model):
 
 class ThomasFleetAccessoryType(models.Model):
     _name='thomasfleet.accessory_type'
+    _description = 'Thomas Fleet Accessory Type'
+
     name = fields.Char("Accessory Type")
 
-    # def search(self, args, offset=0, limit=None, order=None, count=False):
-    #     return  super(ThomasFleetAccessoryType,self).search(args,offset,limit,order,count)
-    #
-    # def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
-    #
-    #     return super(ThomasFleetAccessoryType, self).search_read( domain, fields, offset, limit, order)
 
 class ThomasFleetAccessory(models.Model):
     _name = 'thomasfleet.accessory'
+    _description = 'Thomas Fleet Accessory'
 
     vehicle_id = fields.Many2one('fleet.vehicle', 'Vehicle')
     name = fields.Char('Accessory Name')
@@ -1840,6 +1643,9 @@ class ThomasFleetAccessory(models.Model):
 
 class ThomasFleetMXInvoiceWizard(models.TransientModel):
     _name = 'thomasfleet.mx.invoice.wizard'
+    _description = 'Thomas Fleet MX Invoice Wizard'
+
+
     lease_ids = fields.Many2many('thomaslease.lease', string="Rent")
     invoice_date = fields.Date(string="Invoice Date")
 
