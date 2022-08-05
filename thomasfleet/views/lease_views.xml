@@ -375,7 +375,7 @@
         /> -->
 
 
-        <menuitem name="Rental Agreements" id="lease_agreements_main" sequence="2"/>
+        <menuitem name="Rental Agreements" id="lease_agreements_main" sequence="2" web_icon="thomasfleet,static/src/img/truck.png"/>
         <menuitem name="Rental Agreements" action="thomaslease_lease_action" parent="lease_agreements_main" id="thomaslease_lease_menu"/>
         <menuitem action="open_lease_return_wizard_action" parent="thomaslease_lease_menu" id="thomaslease_return_menu"/>
 

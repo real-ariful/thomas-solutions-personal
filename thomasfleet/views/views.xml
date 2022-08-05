@@ -1332,7 +1332,11 @@
             <field name="name">Assets</field>
         </record>
 
-        <menuitem name="Work Orders" id="invoices_main" sequence="2"/>
+        <menuitem id="invoices_main"
+            name="Work Orders" 
+            web_icon="thomasfleet,static/src/img/work_order.png"
+            sequence="2"/>
+
 
         <menuitem name="Work Orders" action="thomas_workorder_action" parent="invoices_main"
                   id="thomasfleet_invoices_menu"/>
