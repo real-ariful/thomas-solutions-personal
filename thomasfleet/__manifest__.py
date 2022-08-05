@@ -21,34 +21,32 @@
         'report/lease_print_template.xml',
         'report/lease_printout.xml',
         'report/invoice_report_template.xml',
-        # 'data/fleet.vehicle.state.csv',
-        # 'data/thomasfleet.lease_status.csv',
-        # 'data/thomasfleet.location.csv',
-        # 'data/thomasfleet.floormaterial.csv',
-        # 'data/thomasfleet.fueltype.csv',
-        # 'data/thomasfleet.seatmaterial.csv',
-        # 'data/thomasfleet.asset_class.csv',
-        # 'data/thomasfleet.insurance_class.csv',
-        # 'data/fleet.vehicle.model.brand.csv',
-        # 'data/fleet.vehicle.model.csv',
-        # 'data/thomasfleet.trim.csv',
-        # 'data/thomasfleet.inclusions.csv',
-        # 'data/thomasfleet.accessory_type.csv'
-        ###########################################
+        'data/fleet.vehicle.state.csv',
+        'data/thomasfleet.lease_status.csv',
+        'data/thomasfleet.location.csv',
+        'data/thomasfleet.floormaterial.csv',
+        'data/thomasfleet.fueltype.csv',
+        'data/thomasfleet.seatmaterial.csv',
+        'data/thomasfleet.asset_class.csv',
+        'data/thomasfleet.insurance_class.csv',
+        'data/fleet.vehicle.model.brand.csv',
+        'data/fleet.vehicle.model.csv',
+        'data/thomasfleet.trim.csv',
+        'data/thomasfleet.inclusions.csv',
+        'data/thomasfleet.accessory_type.csv'
     ],
+    'assets': {
+        'web.assets_backend': [
+            'thomasfleet/static/src/less/variables.less',
+            'thomasfleet/static/src/less/styles.less',
+            'thomasfleet/static/src/less/report.less'
+        ],
 
-    # 'assets': {
-    #     'web.assets_backend': [
-    #         'thomasfleet/static/src/less/variables.less',
-    #         'thomasfleet/static/src/less/styles.less',
-    #         'thomasfleet/static/src/less/report.less'
-    #     ],
-
-    #     'web.report_assets_common': [
-    #         '/thomasfleet/static/src/less/styles.less',
-    #         '/thomasfleet/static/src/less/report.less',
-    #     ],
-    # },
+        'web.report_assets_common': [
+            '/thomasfleet/static/src/less/styles.less',
+            '/thomasfleet/static/src/less/report.less',
+        ],
+    },
     "price": 0,
     "currency": "USD",
     "license": "OPL-1",
