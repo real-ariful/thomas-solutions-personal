@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+     <!-- <xpath expr="//div[@name='invoice_address']" position="replace"> -->
     <template id="report_invoice_document_inherit_thomas" inherit_id="account.report_invoice_document">
-    <!-- <xpath expr="//div[@name='invoice_address']" position="replace"> -->
         <xpath expr="//address" position="replace">
             <div class="col-xs-12">
                 <div name="address" class="pull-left">
                     <strong>Billing address:</strong>
                     <address t-field="o.partner_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
                     <div t-if="o.partner_id.vat" class="mt16">
-                        <t t-esc="o.company_id.country_id.vat_label or 'TIN'"/>
-:
-                        <span t-field="o.partner_id.vat"/>
+                        <t t-esc="o.company_id.country_id.vat_label or 'TIN'"/>:<span t-field="o.partner_id.vat"/>
                     </div>
                 </div>
 
@@ -92,14 +91,10 @@
         </xpath>
     </template>
 
-
-    <!-- <template id="thomasfleet.invoice_footer" inherit_id="web.external_layout_background"> -->
-    <!-- <xpath expr="//div[hasclass('footer', 'o_background_footer')]" position="replace"> -->
-    <!-- <div class="footer o_background_footer"> -->
     
-    <!-- <template id="thomasfleet.invoice_footer" inherit_id="web.external_layout_standard">
-        <xpath expr="//div[hasclass('o_standard_footer')]" position="replace">
-             <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">
+    <template id="thomasfleet.invoice_footer" inherit_id="web.external_layout_standard">
+            <xpath expr="//div[contains(@t-attf-class, 'footer')]" position="replace">
+            <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout">
                 <div class="text-center">
                     <div t-if="doc_model=='account.move'" t-field="company.report_footer"/>
                 </div>
@@ -142,5 +137,5 @@
             </div>
 
         </xpath>
-    </template> -->
+    </template>
 </odoo>

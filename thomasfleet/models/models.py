@@ -884,7 +884,7 @@ class ThomasFleetVehicle(models.Model):
 
 
 class ThomasFleetOdometer(models.Model):
-    _inherit= 'fleet.vehicle.odometer'
+    _inherit= 'fleet.vehicle.odometer' 
 
 
     lease_id = fields.Many2one('thomaslease.lease', 'Rental Agreement')

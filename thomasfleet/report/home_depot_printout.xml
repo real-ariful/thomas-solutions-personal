@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
     <odoo>
-        <report id="lease_agreement"
-                name="thomasfleet.home_depot_template"
-                model="thomaslease.lease"
-                string="Lease Agreement"
-                report_type="qweb-pdf"/>
+        <record id="lease_agreement"
+            name="thomasfleet.home_depot_template"
+            model="thomaslease.lease"
+            string="Lease Agreement"
+            report_type="qweb-pdf"/>
     </odoo>
