@@ -276,13 +276,13 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <span t-if="doc.vehicle_id.asset_class.name == 'VAN'">
-                                    <img  width="100%" src="/thomasfleet/static/src/img/cube_van.png"/>
+                                    <img  width="100%" src="/thomasfleet/static/src/img/cube_van.png" alt="Cube Van"/>
                                 </span>
                                 <span t-if="doc.vehicle_id.asset_class.name == 'UTC'">
-                                    <img  width="100%" src="/thomasfleet/static/src/img/cube_van.png"/>
+                                    <img  width="100%" src="/thomasfleet/static/src/img/cube_van.png" alt="Cube Van"/>
                                 </span>
                                 <span t-else="">
-                                    <img width="100%" src="/thomasfleet/static/src/img/pick_up.png"/>
+                                    <img width="100%" src="/thomasfleet/static/src/img/pick_up.png" alt="Cube Van"/>
                                 </span>
                             </div>
                             <div class="col-xs-4">
@@ -475,13 +475,13 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <span t-if="doc.vehicle_id.asset_class.name == 'VAN'">
-                                    <img with="100%" src="/thomasfleet/static/src/img/cube_van.png"/>
+                                    <img with="100%" src="/thomasfleet/static/src/img/cube_van.png" alt="Cube Van"/>
                                 </span>
                                 <span t-if="doc.vehicle_id.asset_class.name == 'UTC'">
-                                    <img width="100%" src="/thomasfleet/static/src/img/cube_van.png"/>
+                                    <img width="100%" src="/thomasfleet/static/src/img/cube_van.png" alt="Cube Van"/>
                                 </span>
                                 <span t-else="">
-                                    <img width="100%" src="/thomasfleet/static/src/img/pick_up.png"/>
+                                    <img width="100%" src="/thomasfleet/static/src/img/pick_up.png" alt="Cube Van"/>
                                 </span>
                             </div>
                             <div class="col-xs-4">

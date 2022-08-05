@@ -55,6 +55,7 @@ class ThomasAccountingInvoice(models.Model):
 
     def _compute_gp_po(self):
         for rec in self:
+            rec.gp_po_number = False
             if rec.po_number:
                 s = ''.join([i if ord(i) < 128 else '' for i in str.upper(rec.po_number)[0:20]])
                 rec.gp_po_number = s

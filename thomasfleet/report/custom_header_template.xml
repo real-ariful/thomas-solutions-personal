@@ -7,7 +7,7 @@
                     <h4 class="mt0 text-right" t-field="company.report_header"/>
                 </div>
                 <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)"
-                 class="pull-left"  style="max-height:100px"   />
+                 class="pull-left"  style="max-height:100px" alt="Company Logo" />
                 <div class="pull-left company_address">
                     <div>
                         <strong t-field="company.partner_id.name"/>

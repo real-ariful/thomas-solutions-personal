@@ -73,7 +73,7 @@ class ThomasAssetPhoto(models.Model):
                                  ('driver side back angle', 'Driver Side Back Angle'),
                                  ('passenger side back angle', 'Passenger Side Back Angle')])
     image = fields.Binary("Image", attachment=True)
-    image_small=fields.Binary("Small Image", attachment=True)
+    image_medium=fields.Binary("Small Image", attachment=True)
     image_medium=fields.Binary("Medium Image", attachment=True)
 
     @api.model
@@ -661,15 +661,19 @@ class ThomasFleetVehicle(models.Model):
     def _get_protractor_notes_and_owner(self):
         the_resp = "NO VIN"
         for record in self:
+            record.protractor_owner_guid = False
+            record.stored_protractor_guid = False
+            record.notes = False
+            
             if record.vin_id:
                 url = "https://integration.protractor.com/IntegrationServices/1.0/ServiceItem/Search/"+record.vin_id
                 headers = {
-                'connectionId': "8c3d682f873644deb31284b9f764e38f",
-                'apiKey': "fb3c8305df2a4bd796add61e646f461c",
-                'authentication': "S2LZy0munq81s/uiCSGfCvGJZEo=",
-                'Accept': "application/json",
-                'Cache-Control': "no-cache",
-                'Postman-Token': "9caffd55-2bac-4e79-abfc-7fd1a3e84c6d"
+                    'connectionId': "8c3d682f873644deb31284b9f764e38f",
+                    'apiKey': "fb3c8305df2a4bd796add61e646f461c",
+                    'authentication': "S2LZy0munq81s/uiCSGfCvGJZEo=",
+                    'Accept': "application/json",
+                    'Cache-Control': "no-cache",
+                    'Postman-Token': "9caffd55-2bac-4e79-abfc-7fd1a3e84c6d"
                 }
                 response = requests.request("GET", url, headers=headers)
 
@@ -1122,7 +1126,7 @@ class ThomasFleetJournalItem(models.Model):
     expense = fields.Float("Expense")
     revenue = fields.Float("Revenue")
     type = fields.Selection([('revenue', 'Revenue'), ('expense', 'Expense')])
-    work_order_id = fields.Many2one('thomasfleet.work_order', string='Work Order', help='Work Order For a Vehicle')
+    work_order_id = fields.Many2one('thomasfleet.workorder', string='Work Order', help='Work Order For a Vehicle')
     invoice_line_id = fields.Many2one('account.move.line', string='Invoice Line Item', help='Rental Invoice for the Unit')
     customer_id = fields.Many2one('res.partner', default=default_customer_id,  string='Customer',
                                   help='Work Order For a Vehicle', readonly=True)

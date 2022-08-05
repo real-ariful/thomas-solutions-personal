@@ -78,7 +78,9 @@ class ThomasContact(models.Model):
 
 
     @api.model
-    def name_get(self):
+    def name_get(self, kwargs=None):
+        if not self and kwargs:
+            self = self.browse(kwargs)
         if self._context.get('show_internal_division'):
             res = []
             for rec in self:

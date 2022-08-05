@@ -330,6 +330,7 @@ class ThomasLease(models.Model):
     @api.depends('lease_lines')
     def _compute_rate_calc_description(self):
         for rec in self:
+            rec.rate_calc_description = rec.rate_calc_description or ''
             for line in rec.lease_lines:
                 if rec.rate_calc_description:
                     rec.rate_calc_description = str(rec.rate_calc_description) + str(
@@ -340,6 +341,7 @@ class ThomasLease(models.Model):
     @api.depends('lease_lines')
     def _compute_rate_calc_example(self):
         for rec in self:
+            rec.rate_calc_example = ''
             for line in rec.lease_lines:
                 example = ''
 
