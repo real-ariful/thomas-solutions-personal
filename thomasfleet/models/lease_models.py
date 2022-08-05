@@ -11,7 +11,7 @@ _logger = logging.getLogger(__name__)
 
 
 class ThomasLease(models.Model):
-    _inherit = 'mail.thread'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     def _getLeaseDefault(self):
         return self.env['thomasfleet.lease_status'].search([('name', '=', 'Draft')], limit=1).id
@@ -267,7 +267,8 @@ class ThomasLease(models.Model):
     mileage_overage_rate = fields.Float("Additional Mileage Rate", default=0.14, tracking=True)
 
     customer_id = fields.Many2one("res.partner", "Customer", change_default=True,
-                                  tracking=True, options="{'always_reload':true}",
+                                  tracking=True, 
+                                #   options="{'always_reload':true}",
                                   context="{'show_internal_division':True}")  # required=True)
     customer_name = fields.Char("Customer", related="customer_id.compound_name")
     partner_invoice_id = fields.Many2one('res.partner', string='Bill To', domain="[('parent_id','=',customer_id)]",

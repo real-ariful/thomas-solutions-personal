@@ -39,7 +39,7 @@ class ThomasAccountingInvoice(models.Model):
     customer_name = fields.Char("Customer", related="partner_id.compound_name")
     initial_invoice = fields.Boolean("Initial Invoice", default=False)
     invoice_line_ids = fields.One2many('account.move.line', 'invoice_id', string='Invoice Lines',
-                                       oldname='invoice_line',
+                                    #    oldname='invoice_line',
                                        readonly=True, states={'draft': [('readonly', False)]}, copy=True)
 
     @api.onchange('partner_id', 'company_id')

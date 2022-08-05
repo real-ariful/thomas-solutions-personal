@@ -16,6 +16,7 @@ def dump_obj(obj):
 
 class ThomasAsset(models.Model):
     _name = 'thomas.asset'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Thomas Asset'
 
     unit_no = fields.Char('Unit #', tracking=True)
@@ -124,7 +125,7 @@ class ThomasFleetTest(models.Model):
 class ThomasFleetVehicle(models.Model):
     _name = 'fleet.vehicle'
     _description = 'Thomas Fleet Vehicle'
-    _inherit = ['thomas.asset', 'fleet.vehicle']
+    _inherit = ['thomas.asset', 'fleet.vehicle', 'mail.thread', 'mail.activity.mixin']
     _order = "unit_int asc"
 
     log = logging.getLogger('thomas')
@@ -211,15 +212,15 @@ class ThomasFleetVehicle(models.Model):
     stored_protractor_guid = fields.Char(compute='_get_protractor_notes_and_owner', readonly=True)
     qc_check = fields.Boolean('Data Accurracy Validated')
     fin_check = fields.Boolean('Financial Accuracy Validated')
-    accessories = fields.One2many('thomasfleet.accessory','vehicle_id',String="Accessories", tracking=True)
+    accessories = fields.One2many('thomasfleet.accessory','vehicle_id',string="Accessories", tracking=True)
     write_to_protractor = fields.Boolean(default=False)
     production_date = fields.Char("Production Date", tracking=True)
-    pulled_protractor_data = fields.Boolean(default=False,String="Got Data from Protractor")
+    pulled_protractor_data = fields.Boolean(default=False,string="Got Data from Protractor")
     protractor_owner_guid = fields.Char(compute='_get_protractor_notes_and_owner', string= 'Protractor Owner ID')
     unit_quality = fields.Selection([('new','New'), ('good','Good'),('satisfactory','Satisfactory'),('poor','Poor')],
                                     'Unit Quality',tracking=True)
 
-    historical_revenue = fields.Float("Historical Revenue", track_visbility='onchange', default=0.00)
+    historical_revenue = fields.Float("Historical Revenue", tracking=True, default=0.00)
     revenue_to_date = fields.Float("Total Revenue", compute="compute_revenue", readonly=True, store=True)
     total_maintenance_cost_to_date = fields.Float("Lifetime Maintenance Cost", compute="_compute_maintenance_cost",
                                              readonly=True, store=True)
@@ -227,7 +228,7 @@ class ThomasFleetVehicle(models.Model):
                                              readonly=True, store=True)
     licensing_cost_to_date = fields.Float("Licensing Cost")
     insurance_cost_to_date = fields.Float("Insurance Cost")
-    line_items = fields.One2many('account.move.line','vehicle_id', String="Invoice Line Items")
+    line_items = fields.One2many('account.move.line','vehicle_id', string="Invoice Line Items")
 
     profitability_ratio = fields.Float("Revenue/Cost Ratio", compute="_compute_profitability_ratio", readonly=True,
                                        store=True)
@@ -664,7 +665,7 @@ class ThomasFleetVehicle(models.Model):
             record.protractor_owner_guid = False
             record.stored_protractor_guid = False
             record.notes = False
-            
+
             if record.vin_id:
                 url = "https://integration.protractor.com/IntegrationServices/1.0/ServiceItem/Search/"+record.vin_id
                 headers = {
@@ -884,7 +885,6 @@ class ThomasFleetVehicle(models.Model):
 
 class ThomasFleetOdometer(models.Model):
     _inherit= 'fleet.vehicle.odometer'
-    _description = 'Thomas Fleet Odometer'
 
 
     lease_id = fields.Many2one('thomaslease.lease', 'Rental Agreement')
