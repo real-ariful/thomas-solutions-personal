@@ -15,15 +15,15 @@
             <field name="sequence">302</field>
         </record>
         <record id="group_thomasshop_user" model="res.groups">
-          <field name="name">User</field>
-               <field name="category_id" ref="module_category_shop"/>
-          <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="name">User</field>
+            <field name="category_id" ref="module_category_shop"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
         <record id="group_thomasshop_manager" model="res.groups">
-                 <field name="name">Manager</field>
-             <field name="category_id" ref="module_category_shop"/>
-          <field name="implied_ids" eval="[(4, ref('group_thomasshop_user'))]"/>
-          <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="name">Manager</field>
+            <field name="category_id" ref="module_category_shop"/>
+            <field name="implied_ids" eval="[(4, ref('group_thomasshop_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
         </record>
         <record id="fleet_group_admin" model="res.groups">
             <field name="name">Administrator</field>
