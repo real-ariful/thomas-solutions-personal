@@ -2641,7 +2641,7 @@ class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
                         str_lease_closed += '<p> Lease: ' + a_lease.id.lease_number + 'state changed from Invoice Pending to Closed</p>'
                         a_lease.message_post(
                             body='<p><b>Lease state changed from Invoice Pending to Closed</b></p>',
-                            subject="Lease State Changed", subtype="mt_note")
+                            subject="Lease State Changed")#, subtype="mt_note")
 
             aggregate_customers = list(dict.fromkeys(aggregate_customers))
             agg_invoices = self.record_aggregate_invoice(aggregate_customers, wizard)
@@ -2665,7 +2665,7 @@ class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
                         a.id) + ' Invoice Date: ' + a_i_date + ' From: ' + a_f_date + ' to: ' + a_t_date + '<\p>'
                     l.message_post(
                         body='<p><b>Invoice(s) have been successfully created for: ' + a_i_date + '</b></p>' + strPost,
-                        subject="Invoice Creation", subtype="mt_note")
+                        subject="Invoice Creation")#, subtype="mt_note")
 
             strSuccess += "<hr/>"
 
@@ -2731,7 +2731,7 @@ class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
                         str_lease_closed += '<p> Lease: ' + a_lease.id.lease_number + 'state changed from Invoice Pending to Closed</p>'
                         a_lease.id.message_post(
                             body='<p><b>Lease state changed from Invoice Pending to Closed</b></p>',
-                            subject="Lease State Changed", subtype="mt_note")
+                            subject="Lease State Changed")#, subtype="mt_note")
 
             aggregate_customers = list(dict.fromkeys(aggregate_customers))
             agg_invoices = self.record_aggregate_invoice(aggregate_customers, wizard)
@@ -2763,7 +2763,7 @@ class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
 
                     l.message_post(
                         body='<p><b>Invoice(s) have been successfully created for: ' + a_i_date + '</b></p>' + strPost,
-                        subject="Invoice Creation", subtype="mt_note")
+                        subject="Invoice Creation")#, subtype="mt_note")
                     _logger.info("Posted message for Invoice creation " + str(count_invoices))
 
             strSuccess += "<hr/>"

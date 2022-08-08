@@ -8,8 +8,6 @@ class ThomasMessage(models.TransientModel):
     title = fields.Char('Title')
     message = fields.Html(readonly=True)
     ok_handler = False
-    #invoice_ids = fields.One2many('account.move', 'message_id', string='Invoices')
-    #lease_ids = fields.One2many('thomaslease.lease', string='Lease Agreements')
 
     def ok_pressed(self):
         print("OK Pressed")

@@ -9,13 +9,11 @@ from odoo.osv import expression
 class ThomasContact(models.Model):
     _inherit = 'res.partner'
 
-    # user_id = fields.Many2one('res.users', string='Thomas Contact',
-    #                           help='The internal user that is in charge of communicating with this contact if any.',tracking=True)
     qc_check = fields.Boolean(string='Data Accuracy Validation',tracking=True)
     lease_agreements = fields.One2many('thomaslease.lease', 'customer_id', 'Lease Contracts',tracking=True)
     documents = fields.One2many('thomasfleet.customer_document', 'customer_id', 'Customer Docucments',tracking=True)
     department = fields.Many2one('thomasfleet.customer_department','Department',tracking=True)
-    protractor_guid = fields.Char(string='Protractor GUID', readonly=True,tracking=True) #,compute='_compute_protractor_guid')
+    protractor_guid = fields.Char(string='Protractor GUID', readonly=True,tracking=True)
     protractor_search_name = fields.Char(string="Search Name", compute='_compute_protractor_search_name',tracking=True)
     ap_contact = fields.Boolean(string="Accounts Payable Contact",tracking=True)
     po_contact = fields.Boolean(string="Purchasing Contact",tracking=True)
@@ -64,7 +62,6 @@ class ThomasContact(models.Model):
     gp_customer_id = fields.Char(string="GP Customer ID",tracking=True)
     internal_division = fields.Char(string="Internal Division")
     compound_name = fields.Char(string="Compound Name", compute="_compute_compound_name")
-    #name = fields.Char(string="Name",index=True)
 
 
     @api.depends('name','internal_division')
@@ -103,13 +100,12 @@ class ThomasContact(models.Model):
         return super(ThomasContact, self).name_search(name, args, operator, limit)
 
 
-    @api.model
     def find_protractor_guid(self):
 
         default_company_id = self.env['res.company']._company_default_get().id
         for record in self:
 
-            #print("Getting Protarctor ID for Customer: "+ str(parse.quote(str(record.name_get()))))
+            print("Getting Protarctor ID for Customer: "+ str(parse.quote(str(record.name_get()))))
             the_resp = "NO GUID"
             if record.id != default_company_id:# and not record.protractor_guid:
                 if record.protractor_search_name:
@@ -124,7 +120,7 @@ class ThomasContact(models.Model):
                     response = requests.request("GET", url, headers=headers)
                     print(str(url))
                     if response.ok:
-                        #print(response.text)
+                        print(response.text)
                         data = response.json()
                         the_id = False
                         for item in data['ItemCollection']:

@@ -39,8 +39,7 @@ class ThomasAccountingInvoice(models.Model):
     customer_name = fields.Char("Customer", related="partner_id.compound_name")
     initial_invoice = fields.Boolean("Initial Invoice", default=False)
     invoice_line_ids = fields.One2many('account.move.line', 'invoice_id', string='Invoice Lines',
-                                    #    oldname='invoice_line',
-                                       readonly=True, states={'draft': [('readonly', False)]}, copy=True)
+        readonly=True, states={'draft': [('readonly', False)]}, copy=True)
 
     @api.onchange('partner_id', 'company_id')
     def _onchange_delivery_address(self):
@@ -88,9 +87,9 @@ class ThomasAccountingInvoice(models.Model):
         ar = self.env['res.partner'].search([('name', '=', 'Accounts Receivable')])
         res.append(ar.id)
         return res
+
     @api.model
     def _get_mail_contacts(self):
-
         self.ensure_one()
         contact_ids=[]
         for lease in self.lease_ids:
@@ -110,7 +109,7 @@ class ThomasAccountingInvoice(models.Model):
             lease.message_post(
                 body='<p><b>Invoice Canceled</b></p><p>Invoice dated: ' + str(self.invoice_posting_date) +
                      ' for: $' + str(self.amount_total_signed) + ' for this lease was canceled</p>',
-                subject="Invoice Canceled", subtype="mt_note")
+                subject="Invoice Canceled")#, subtype="mt_note")
 
         return res
 
@@ -135,7 +134,7 @@ class ThomasAccountingInvoice(models.Model):
                 lease.message_post(
                     body='<p><b>Invoice Deleted:</b></p><p>Invoice dated: ' + str(invoice.invoice_posting_date) +
                          ' for: $' + str(invoice.amount_total_signed) + ' for this lease was deleted</p>',
-                    subject="Invoice Deleted", subtype="mt_note")
+                    subject="Invoice Deleted")#, subtype="mt_note")
 
         return super(ThomasAccountingInvoice, self).unlink()
 

@@ -67,7 +67,8 @@ class ThomasAssetPhoto(models.Model):
     _description = 'Thomas Asset Photo'
 
     photo_set_id = fields.Many2one('thomasfleet.asset_photo_set', 'PhotoSet')
-    position = fields.Selection([('driver side', 'Driver Side'), ('passenger side', 'Passenger Side'),
+    position = fields.Selection([('driver side', 'Driver Side'), 
+                                 ('passenger side', 'Passenger Side'),
                                  ('front', 'Front'),('back', 'Back'),
                                  ('driver side front angle', 'Driver Side front Angle'),
                                  ('passenger side front angle', 'Passenger Side Front Angle'),
@@ -100,6 +101,7 @@ class ThomasFleetTest(models.Model):
     _inherit = ['fleet.vehicle']
 
     unit_int = fields.Integer(compute='_getInteger', store=True)
+
     @api.depends('unit_no')
     def _getInteger(self):
         for rec in self:
@@ -439,26 +441,8 @@ class ThomasFleetVehicle(models.Model):
             "OwnerID": owner_id
             }
         payload =json.dumps(theUnit)
-        #print(payload)
-            #"{\"IsComplete\": true,\"PlateRegistration\": \""+plateReg+"\",
-        # \"VIN\": \"2C4RDGBGXDR542491\",\"Unit\": \"\",\"Color\": \"PURPLE\",
-        # \"Year\": 2013,\"Make\": \"Dodge\",\"Model\": \"Grand Caravan\",
-        # \"Submodel\": \"SE\",\"Engine\": \"V6 3.6L 3604CC 220CID\",\"ID\":
-        # \"a70c552f-5555-4a57-b4ea-8dbb798e7013\",\"Type\": \"Vehicle\",
-        # \"Lookup\": \"BRDA497\",\"Description\": \"2013 Dodge Grand Caravan SE\",
-        # \"Usage\": 0,\"ProductionDate\": \"0001-01-01T00:00:00\",\"Note\": \"\",
-        # \"NoEmail\": false,\"NoPostCard\": false,\"PreferredContactMethod\": \"Email\",\"MarketingSource\":\"\"}"
-        '''
-        headers = {
-            'connectionId': "de8b3762edfd41fdbc37ddc3ef4d0f1d",
-            'apiKey': "3d326387107942f0bf5fa9ec342e4989",
-            'authentication': "5NmTG0A6uNLnTiVcp1FZL9is+js=",
-            'Accept': "application/json",
-            'Content-Type': "application/json",
-            'Cache-Control': "no-cache",
-            'Postman-Token': "2e5fe1e2-b08e-41b8-aab1-58b75642351a"
-        }
-        '''
+
+
         headers = {
             'connectionId': "8c3d682f873644deb31284b9f764e38f",
             'apiKey': "fb3c8305df2a4bd796add61e646f461c",
@@ -477,13 +461,14 @@ class ThomasFleetVehicle(models.Model):
         the_resp = dict()
         the_resp['id']= False
         the_resp['update'] = False
+
         if self.vin_id:
             url = "https://integration.protractor.com/IntegrationServices/1.0/ServiceItem/Search/"+self.vin_id
             headers = {
-            'connectionId': "8c3d682f873644deb31284b9f764e38f",
-            'apiKey': "fb3c8305df2a4bd796add61e646f461c",
-            'authentication': "S2LZy0munq81s/uiCSGfCvGJZEo=",
-            'Accept': "application/json"
+                'connectionId': "8c3d682f873644deb31284b9f764e38f",
+                'apiKey': "fb3c8305df2a4bd796add61e646f461c",
+                'authentication': "S2LZy0munq81s/uiCSGfCvGJZEo=",
+                'Accept': "application/json"
             }
             response = requests.request("GET", url, headers=headers)
 
