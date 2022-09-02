@@ -12,7 +12,6 @@
         'security/thomasfleet_security.xml',
         'security/ir.model.access.csv',
         'views/message_views.xml',
-        'views/fleet_vehicle.xml',
         'views/views.xml',
         'views/lease_views.xml',
         'views/customer_views.xml',
