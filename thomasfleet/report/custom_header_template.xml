@@ -15,9 +15,7 @@
                     <span t-field="company.partner_id"
                           t-field-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>
                 </div>
-
             </div>
-
         </xpath>
     </template>
 </odoo>

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, exceptions
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError, ValidationError
 from datetime import date, datetime, timedelta
 from dateutil import relativedelta
 import calendar
@@ -58,7 +59,7 @@ class ThomasLease(models.Model):
         for rec in self:
             if rec.rate_type == 'Bi-Weekly' and rec.run_initial_invoicing:
                 rec.run_initial_invoicing = False
-                raise models.ValidationError(
+                raise ValidationError(
                     'You cannot run Initial Invoicing (Back Billing) for Bi-Weekly lease agreements ')
 
     @api.constrains('vehicle_id')
@@ -68,12 +69,12 @@ class ThomasLease(models.Model):
                 return
             for lease_agreement in rec.vehicle_id.lease_agreements:
                 if lease_agreement.state == 'active' and lease_agreement.id != rec.id:
-                    raise models.ValidationError(
+                    raise ValidationError(
                         'Unit: ' + rec.vehicle_id.unit_no +
                         ' is currently associated with an Active lease agreement: ' + lease_agreement.lease_number)
 
                 if lease_agreement.state == 'repairs_pending':
-                    raise models.ValidationError(
+                    raise ValidationError(
                         'Unit: ' + rec.vehicle_id.unit_no +
                         ' is currently associated with an Repairs Pending lease agreement: ' + lease_agreement.lease_number)
 
@@ -107,7 +108,8 @@ class ThomasLease(models.Model):
             if not self.billing_start_date:
                 self.billing_start_date = self.lease_start_date
 
-            lease_start_date = datetime.strptime(self.billing_start_date, '%Y-%m-%d')
+            # lease_start_date = datetime.strptime(self.billing_start_date, '%Y-%m-%d')
+            lease_start_date = datetime.strftime(self.billing_start_date, '%Y-%m-%d')
 
             today = date.today()
             last_day_lease_month = calendar.monthrange(lease_start_date.year, lease_start_date.month)[1]
@@ -179,7 +181,6 @@ class ThomasLease(models.Model):
         for rec in self:
             rec.state = 'active'
 
-    @api.model
     def lease_print(self):
         """ Print the invoice and mark it as sent, so that we can see more
             easily the next step of the workflow
@@ -206,9 +207,7 @@ class ThomasLease(models.Model):
                               ('closed', 'Closed')], string="Status", default='draft', tracking=True)
 
     lease_start_date = fields.Date("Rent Start Date", tracking=True)  # , required=True)
-
     billing_start_date = fields.Date("Billing Start Date", tracking=True)
-
     invoice_from = fields.Date(string="Invoice From", tracking=True)
     invoice_to = fields.Date(string="Invoice To", tracking=True)
     last_invoice_to = fields.Date(string="Last Invoice Date Range", tracking=True)
@@ -266,7 +265,7 @@ class ThomasLease(models.Model):
     monthly_mileage = fields.Integer("Mileage Allowance", default=3500, tracking=True)
     mileage_overage_rate = fields.Float("Additional Mileage Rate", default=0.14, tracking=True)
 
-    customer_id = fields.Many2one("res.partner", "Customer", change_default=True,
+    customer_id = fields.Many2one("res.partner", "Customer ID", change_default=True,
                                   tracking=True, 
                                 #   options="{'always_reload':true}",
                                   context="{'show_internal_division':True}")  # required=True)
@@ -326,7 +325,7 @@ class ThomasLease(models.Model):
     aggregation_id = fields.Char("Aggregate ID")
     rate_calc_description = fields.Char("Rate Note", compute='_compute_rate_calc_description')
     rate_calc_example = fields.Text("Rate Calculations", compute='_compute_rate_calc_example')
-    rate_calc_example_for_report = fields.Html("Rate Calculations", compute='_compute_rate_calc_example_html')
+    rate_calc_example_for_report = fields.Html("Rate Calculations [Example]", compute='_compute_rate_calc_example_html')
 
     @api.depends('lease_lines')
     def _compute_rate_calc_description(self):
@@ -645,10 +644,12 @@ class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
             # a_lease = self.env['thomaslease.lease'].browse(lease)
             # print("Validating Lease: "+ a_lease.lease_number)
             if not a_lease.lease_lines:
-                raise models.ValidationError(
+                if not a_lease.unit_no:
+                    raise UserError(_("Please provide Unit No!"))
+                raise ValidationError(
                     'Lease for Unit #' + a_lease.unit_no + ' needs a line item product before it can be invoiced')
             if a_lease.state == 'closed':
-                raise models.ValidationError('Lease for Unit #' + a_lease.unit_no + ' is Closed and cannot be invoiced')
+                raise ValidationError('Lease for Unit #' + a_lease.unit_no + ' is Closed and cannot be invoiced')
             else:
                 # print("Setting Dates " + a_lease.lease_number)
                 vals = self.get_invoice_dates(a_lease, False)
@@ -668,10 +669,10 @@ class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
             a_lease = self.env['thomaslease.lease'].browse(lease)
             print("Validating Lease: " + a_lease.lease_number)
             if not a_lease.lease_lines:
-                raise models.ValidationError(
+                raise ValidationError(
                     'Lease for Unit #' + a_lease.unit_no + ' needs a line item product before it can be invoiced')
             if a_lease.state == 'closed':
-                raise models.ValidationError('Lease for Unit #' + a_lease.unit_no + ' is Closed and cannot be invoiced')
+                raise ValidationError('Lease for Unit #' + a_lease.unit_no + ' is Closed and cannot be invoiced')
             else:
                 print("Setting Invoice Date " + a_lease.lease_number)
                 self.set_invoice_dates(a_lease, False)
@@ -1851,7 +1852,7 @@ class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
                             aggregation_ids.append(ag_id)
 
                         else:
-                            raise models.ValidationError(
+                            raise ValidationError(
                                 'Lease agreement issue: Customer is marked for Aggregate '
                                 'invoicing but lease agreement does not contain a PO or AP Contact '
                                 'Agreement: ' + lease.lease_number + "Customer: " + lease.customer_id.name
@@ -2226,7 +2227,7 @@ class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
                             aggregation_ids.append(ag_id)
 
                         else:
-                            raise models.ValidationError(
+                            raise ValidationError(
                                 'Lease agreement issue: Customer is marked for Aggregate '
                                 'invoicing but lease agreement does not contain a PO or AP Contact '
                                 'Agreement: ' + lease.lease_number + "Customer: " + lease.customer_id.name
@@ -2598,7 +2599,7 @@ class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
                             if i_inv_to == invoice_to and i_inv_from == invoice_from:
                                 in_range = True
                         else:
-                            raise models.ValidationError('Invoice: ' + str(inv.display_name) + ' for Rental Agreement ' + str(
+                            raise ValidationError('Invoice: ' + str(inv.display_name) + ' for Rental Agreement ' + str(
                                 lease.lease_number) + ' is missing Invoice From and To dates')
             # if last_invoice_dt <= invoice_to and last_invoice_dt >= invoice_from:
             #    in_range = True

@@ -10,7 +10,6 @@
     'version': '15.0.1',
     'depends': ['web', 'bus', 'base_import' ],
     'data': [
-        'views/templates.xml',
     ],
     'qweb': [
         'static/src/xml/progress_bar.xml',
@@ -37,7 +36,5 @@
     "installable": True,
     "application": False,
     "auto_install": True,
-
-
 
 }

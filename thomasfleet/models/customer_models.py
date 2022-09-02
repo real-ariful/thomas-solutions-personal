@@ -42,13 +42,13 @@ class ThomasContact(models.Model):
         , tracking=True)
     lease_agreement_po_ids = fields.Many2many(
         'thomaslease.lease',
-        string='Lease Agreements',
+        string='Lease Agreements [PO]',
         relation='lease_agreement_res_partner_po_rel'  # optional
         , tracking=True
     )
     lease_agreement_ops_ids = fields.Many2many(
         'thomaslease.lease',
-        string='Lease Agreements',
+        string='Lease Agreements [OPS]',
         relation='lease_agreement_res_partner_ops_rel'  # optional
         ,tracking=True
     )

@@ -72,6 +72,7 @@ access_thomasfleet_journal_item_user,thomasfleet.journal_item.user,model_thomasf
 access_thomasfleet_journal_item_manager,thomasfleet.journal_item.manager,model_thomasfleet_journal_item,fleet.fleet_group_manager,1,1,1,1
 ,,,,,,
 thomasfleet.access_thomaslease_message,access_thomaslease_message,thomasfleet.model_thomaslease_message,base.group_user,1,0,0,0
+thomasfleet.access_thomaslease_message_man,access_thomaslease_message_man,thomasfleet.model_thomaslease_message,fleet.fleet_group_manager,1,1,1,1
 ,,,,,,
 thomasfleet.access_thomasfleet_workorder_index,access_thomasfleet_workorder_index,thomasfleet.model_thomasfleet_workorder_index,base.group_user,1,0,0,0
 ,,,,,,

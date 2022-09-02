@@ -1,7 +1,7 @@
 <odoo>
     <data>
 
-        <record id="thomase_invoice_form" model="ir.ui.view">
+        <!-- <record id="thomase_invoice_form" model="ir.ui.view">
             <field name="model">account.move</field>
             <field name="inherit_id" ref="account.view_move_form" />
             <field name="arch" type="xml">
@@ -33,7 +33,7 @@
                     </xpath>
                 </data>
             </field>
-        </record>
+        </record> -->
         
         <record id="thomase_invoice_tree" model="ir.ui.view">
             <field name="model">account.move</field>

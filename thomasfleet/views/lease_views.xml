@@ -141,7 +141,7 @@
                                 </group>
                             </group>
                         </group>
-                        <notebook col="4">
+                        <notebook>
                             <page string="Rental">
                                 <group col="4">
                                     <group style="margin-bottom:0px"   string="Details">

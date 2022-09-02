@@ -14,7 +14,7 @@ class ThomasAccountingInvoice(models.Model):
     thomas_invoice_class = fields.Selection([('rental','Rental'),('repair', 'Repair'),('407', '407'), ('fines', 'Fines')],
                                             string="Invoice Type", default='rental')
 
-    vehicle_id = fields.Many2one("fleet.vehicle", string="Unit #")
+    vehicle_id = fields.Many2one("fleet.vehicle", string="Vehicle Unit #")
 
     # unit_no = fields.Char(related='vehicle_id.unit_no', string="Unit #")
     lease_ids = fields.Many2many('thomaslease.lease',string='Lease Agreements',
@@ -40,6 +40,8 @@ class ThomasAccountingInvoice(models.Model):
     initial_invoice = fields.Boolean("Initial Invoice", default=False)
     invoice_line_ids = fields.One2many('account.move.line', 'invoice_id', string='Invoice Lines',
         readonly=True, states={'draft': [('readonly', False)]}, copy=True)
+    
+    reconciled_payments_count = fields.Integer()  
 
     @api.onchange('partner_id', 'company_id')
     def _onchange_delivery_address(self):
@@ -138,7 +140,6 @@ class ThomasAccountingInvoice(models.Model):
 
         return super(ThomasAccountingInvoice, self).unlink()
 
-    @api.model
     def action_invoice_send_to_ar(self):
         self.ensure_one()
         ar = self._get_ar_contact()
@@ -223,7 +224,7 @@ class ThomasAccountInvoiceLine(models.Model):
     lease_line_id = fields.Many2one('thomaslease.lease_line',string="Lease Line")
     # unit_no = fields.Char(string="Unit #",related="lease_line_id.vehicle_id.unit_no")
     #thomas_invoice_type = fields.Char(string="Invoice Type", related="invoice_id.")
-    reference = fields.Char(string="Reference", compute="_compute_reference", inverse="_set_reference", store=True)
+    reference = fields.Char(string="Vehicle Reference", compute="_compute_reference", inverse="_set_reference", store=True)
     vehicle_id = fields.Many2one('fleet.vehicle', string="Unit #")#, domain="[('id', 'in', invoice_id.vehicle_ids.ids)]")
     invoice_id = fields.Many2one('account.move', 'invoice_line_ids')
     invoice_date = fields.Date(string="Invoice Date", related='invoice_id.invoice_date' ,store=True)
