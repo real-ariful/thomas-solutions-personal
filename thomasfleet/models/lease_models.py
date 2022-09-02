@@ -2692,7 +2692,7 @@ class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
 
         # rec = theMess.
         # rec2 = rec.with_context(ok_handler=self.ok_pressed)
-        res = self.env['ir.actions.act_window'].for_xml_id('thomasfleet', 'message_action')
+        res = self.env['ir.actions.act_window']._for_xml_id('thomasfleet.message_action')
         res.update(
             context=dict(self.env.context, ok_handler='ok_pressed', caller_model=self._name, caller_id=self.id),
             res_id=rec.id
@@ -2791,7 +2791,7 @@ class ThomasFleetLeaseInvoiceWizard(models.TransientModel):
 
         # rec = theMess.
         # rec2 = rec.with_context(ok_handler=self.ok_pressed)
-        res = self.env['ir.actions.act_window'].for_xml_id('thomasfleet', 'message_action')
+        res = self.env['ir.actions.act_window']._for_xml_id('thomasfleet.message_action')
         res.update(
             context=dict(self.env.context, ok_handler='ok_pressed', caller_model=self._name, caller_id=self.id),
             res_id=rec.id

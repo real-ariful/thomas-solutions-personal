@@ -243,7 +243,7 @@ class ThomasFleetVehicle(models.Model):
     all_cost = fields.Float("Total Costs", compute="_compute_maintenance_cost",
                                              readonly=True, store=True)
 
-
+    cost_report = fields.Float("Cost Report", store=True)
 
     @api.model
     @api.depends('unit_no')
@@ -387,7 +387,7 @@ class ThomasFleetVehicle(models.Model):
 
         rec = theMess.create({'message': "Do you want to unit update " + self.unit_no +" in Protractor?"})
 
-        res = self.env['ir.actions.act_window'].for_xml_id('thomasfleet', 'message_action')
+        res = self.env['ir.actions.act_window']._for_xml_id('thomasfleet.message_action')
 
         res.update(
             context=dict(self.env.context, ok_handler='ok_pressed', caller_model=self._name, caller_id=self.id),
@@ -759,16 +759,12 @@ class ThomasFleetVehicle(models.Model):
         self.update({'protractor_workorders': updatedInvoices})
 
 
-
-
-
-    @api.model
     def act_show_vehicle_photos(self):
         """ This opens log view to view and add new log for this vehicle, groupby default to only show effective costs
             @return: the costs log view
         """
         self.ensure_one()
-        res = self.env['ir.actions.act_window'].for_xml_id('thomasfleet', 'thomas_asset_photos_action')
+        res = self.env['ir.actions.act_window']._for_xml_id('thomasfleet.thomas_asset_photos_action')
         res.update(
             context=dict(self.env.context, default_vehicle_id=self.id, search_default_parent_false=True),
             domain=[('vehicle_id', '=', self.id)]
@@ -780,13 +776,13 @@ class ThomasFleetVehicle(models.Model):
 
 
 
-    @api.model
     def act_show_vehicle_lease_agreements(self):
         """ This opens log view to view and add new log for this vehicle, groupby default to only show effective costs
             @return: the costs log view
         """
         self.ensure_one()
-        res = self.env['ir.actions.act_window'].for_xml_id('thomasfleet', 'thomas_lease_agreements_action')
+        # action = self.env["ir.actions.actions"]._for_xml_id("stock.action_picking_tree_all")
+        res = self.env['ir.actions.act_window']._for_xml_id('thomasfleet.thomas_lease_agreements_action')
         res.update(
             #context=dict(self.env.context, default_vehicle_id=self.id, search_default_parent_false=True),
             domain=[('vehicle_id', '=', self.id)]
@@ -800,7 +796,7 @@ class ThomasFleetVehicle(models.Model):
             @return: the costs log view
         """
         self.ensure_one()
-        res = self.env['ir.actions.act_window'].for_xml_id('thomasfleet', 'thomas_lease_invoices_action')
+        res = self.env['ir.actions.act_window']._for_xml_id('thomasfleet.thomas_lease_invoices_action')
         res.update(
             #context=dict(self.env.context, default_vehicle_id=self.id, search_default_parent_false=True),
             domain=[('id','in',tuple(self.lease_invoice_ids.ids))]
@@ -840,7 +836,6 @@ class ThomasFleetVehicle(models.Model):
                 j_item.with_context(skip_update=True).unlink()
         return
 
-    @api.model
     def act_get_workorders(self):
         print("WORK ORDERS ACTION")
         print('SELF ID ' + str(self.id))
@@ -856,7 +851,7 @@ class ThomasFleetVehicle(models.Model):
         wo = self.env['thomasfleet.workorder']
         wos = wo._create_protractor_workorders_for_unit(self.id,self.protractor_guid)
         self.ensure_one()
-        res = self.env['ir.actions.act_window'].for_xml_id('thomasfleet', 'thomas_workorder_action')
+        res = self.env['ir.actions.act_window']._for_xml_id('thomasfleet.thomas_workorder_action')
         res.update(
         context=dict(self.env.context, default_vehicle_id=self.id, search_default_parent_false=True,
                      ),
@@ -1555,7 +1550,7 @@ class ThomasFleetWorkOrder(models.Model):
         self.ensure_one()
         self.get_workorder_details()
 
-        res = self.env['ir.actions.act_window'].for_xml_id('thomasfleet', 'thomas_workorder_details_action')
+        res = self.env['ir.actions.act_window']._for_xml_id('thomasfleet.thomas_workorder_details_action')
         res.update(
             context=dict(self.env.context, default_workorder_id=self.id, search_default_parent_false=True),
             domain=[('workorder_id', '=', self.id)]
@@ -1585,7 +1580,7 @@ class ThomasFleetWorkOrderDetails(models.Model):
 
     @api.model
     def act_get_invoice_details_line(self):
-        res = self.env['ir.actions.act_window'].for_xml_id('thomasfleet', 'thomas_workorder_details_line_action')
+        res = self.env['ir.actions.act_window']._for_xml_id('thomasfleet.thomas_workorder_details_line_action')
         res.update(
             context=dict(self.env.context, default_invoice_id = self.id, search_default_parent_false=True),
             domain=[('workorder_details_id', '=', self.id)]

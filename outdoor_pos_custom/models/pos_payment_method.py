@@ -8,4 +8,3 @@ class PosPaymentMethod(models.Model):
 
     
     hide_method = fields.Boolean(string="Hide Method for Immediate Payment", default=False)
-    
