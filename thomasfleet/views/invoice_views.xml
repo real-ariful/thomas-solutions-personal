@@ -71,7 +71,7 @@
             <field name="context">{'move_type':'out_invoice', 'show_internal_division':True, 'journal_type': 'sale', 'lease': True}</field>
         </record>
 
-        <menuitem name="Customer Invoices" id="work_orders_main" sequence="2" groups="account.group_account_invoice" web_icon="account,static/description/icon.png"/>/>
+        <menuitem name="Customer Invoices" id="work_orders_main" sequence="7" groups="account.group_account_invoice" web_icon="account,static/description/icon.png"/>
         <menuitem name="Rental Invoices" action="account.action_move_out_invoice_type" parent="work_orders_main" id="thomasfleet_workorder_menu" />
 
     </data>

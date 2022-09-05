@@ -922,11 +922,13 @@
         <menuitem id="invoices_main"
             name="Work Orders" 
             web_icon="thomasfleet,static/src/img/work_order.png"
-            sequence="2"/>
+            sequence="7"/>
 
 
-        <menuitem name="Work Orders" action="thomas_workorder_action" parent="invoices_main"
-                  id="thomasfleet_invoices_menu"/>
+        <menuitem name="Work Orders" 
+            action="thomas_workorder_action" 
+            parent="invoices_main"
+            id="thomasfleet_invoices_menu"/>
 
     </data>
 </odoo>

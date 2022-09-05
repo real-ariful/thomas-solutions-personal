@@ -2,7 +2,6 @@
 from odoo import models, api, registry, fields, _
 from odoo.exceptions import UserError
 
-
 class BaseImport(models.TransientModel):
     _inherit = 'base_import.import'
 

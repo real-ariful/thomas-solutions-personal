@@ -21,10 +21,6 @@
         'report/lease_print_template.xml',
         'report/lease_printout.xml',
         'report/invoice_report_template.xml',
-        ########################################
-        # 'report/custom_external_layout.xml',
-        # 'report/report_invoice_templates.xml',
-        ####################################
         # Data
         'data/fleet.vehicle.state.csv',
         'data/thomasfleet.lease_status.csv',
