@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
-import requests, json, uuid
+from odoo import models, fields, api, tools, exceptions
+import logging, pprint, requests, json, uuid
+from datetime import date, datetime
+from dateutil import parser
 from urllib import parse
 from odoo.osv import expression
 
@@ -12,7 +14,7 @@ _logger = logging.getLogger(__name__)
 
 
 class ThomasFleetTest(models.Model):
-    _inherit = ['fleet.vehicle']
+    _inherit = 'fleet.vehicle'
 
     unit_int = fields.Integer(compute='_getInteger', store=True)
 
