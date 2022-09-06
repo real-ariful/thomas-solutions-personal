@@ -11,7 +11,13 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-
+#Some fields don't have the exact same name
+MODEL_FIELDS_TO_VEHICLE = {
+    'transmission': 'transmission', 'model_year': 'model_year', 'electric_assistance': 'electric_assistance',
+    'color': 'color', 'seats': 'seats', 'doors': 'doors', 'trailer_hook': 'trailer_hook',
+    'default_co2': 'co2', 'co2_standard': 'co2_standard', 'default_fuel_type': 'fuel_type',
+    'power': 'power', 'horsepower': 'horsepower', 'horsepower_tax': 'horsepower_tax',
+}
 
 class ThomasFleetTest(models.Model):
     _inherit = 'fleet.vehicle'
