@@ -7,15 +7,7 @@ class WPReportController(ReportController):
     @http.route(['/report/download'], type='http', auth="user")
     def report_download(self, data, context=None):
         """
-            This function is used by 'action_manager_report.js' in order to trigger the download of
-            a pdf/controller report.
-
-            :param data: a javascript array JSON.stringified containg report internal url ([0]) and
-            type [1]
-            :returns: Response with an attachment header
-
-
-            Pass web progress code from request content to the context
+        Pass web progress code from request content to the context
         """
         requestcontent = json.loads(data)
         if len(requestcontent) > 2:

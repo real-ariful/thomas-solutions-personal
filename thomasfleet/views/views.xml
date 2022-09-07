@@ -1,7 +1,5 @@
 <odoo>
     <data>
-        
-     
 
         <record id="thomas_vehicle_expense_pivot_view" model="ir.ui.view">
             <field name="model">thomasfleet.workorder</field>
@@ -929,6 +927,33 @@
             action="thomas_workorder_action" 
             parent="invoices_main"
             id="thomasfleet_invoices_menu"/>
+
+        
+        <record id="view_res_company_form" model="ir.ui.view">
+            <field name="name">view.res.company.form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form" />
+            <field name="arch" type="xml">
+                <!-- REMOVE LATER -->
+                <!-- <xpath expr="//sheet" position="before">
+                    <header>
+                        <button name="action_operation"
+                                string="Action Operation"
+                                type="object"
+                                help="message" />
+                    </header>
+                </xpath> -->
+                <!-- REMOVE LATER -->
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <field name="report_header"/>
+                </xpath>
+                <xpath expr="//field[@name='favicon']" position="after">
+                    <field name="report_footer"/>
+                </xpath>
+            </field>
+        </record>
+        
+        
 
     </data>
 </odoo>

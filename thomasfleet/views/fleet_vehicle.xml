@@ -395,12 +395,12 @@
                                            data-context='{"xml_id":"fleet_vehicle_log_contract_action","search_default_open": 1}'>
                                             <field name="contract_count"/>
                                             Contract(s)
-                                            <span t-if="record.contract_renewal_due_soon.raw_value and !record.contract_renewal_overdue.raw_value"
+                                            <!-- <span t-if="record.contract_renewal_due_soon.raw_value and !record.contract_renewal_overdue.raw_value"
                                                   class="fa fa-exclamation-triangle" t-att-style="'color:orange'">
                                             </span>
                                             <span t-if="record.contract_renewal_overdue.raw_value"
                                                   class="fa fa-exclamation-triangle" t-att-style="'color:red;'">
-                                            </span>
+                                            </span> -->
                                         </a>
                                     </div>
                                 </div>
@@ -442,7 +442,7 @@
             <field name="model">fleet.vehicle</field>
             <field name="inherit_id" ref="fleet.fleet_vehicle_view_search"></field>
             <field name="arch" type="xml">
-                <xpath expr="//search[1]" position="replace">
+                <xpath expr="//field[@name='name']" position="before">
                     <search string="All vehicles">
                         <field name="unit_no"></field>
                         <field name="vin_id"></field>
