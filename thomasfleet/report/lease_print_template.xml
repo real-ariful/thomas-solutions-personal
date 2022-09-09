@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- <template id="thomasfleet.report_styles" name="Report Styles" inherit_id="web.report_layout">
+   <!-- <template id="thomasfleet.report_styles" name="Report Styles" inherit_id="web.report_layout">
         <xpath expr="//head/t" position="after">
             <link href="/thomasfleet/static/src/less/report.less" rel="stylesheet" type="text/less"/>
             <link href="/thomasfleet/static/src/less/utility_field.less" rel="stylesheet" type="text/less"/>
             <script src="/thomasfleet/static/src/js/utility_field.js" type="text/javascript" />
         </xpath>
     </template>-->
-    <!-- <template id="thomasfleet.lease_agreement_footer" inherit_id="web.external_layout_background">
+   <!-- <template id="thomasfleet.lease_agreement_footer" inherit_id="web.external_layout_background">
         <xpath expr="//div[@class='footer o_background_footer']" position="replace">
             <div class="footer o_background_footer">
             <div class="text-center">
@@ -24,11 +24,9 @@
                 </div>
             </div>
         </div>
-
         </xpath>
-    </template> -->
-
-    <!-- <template id="thomasfleet.lease_agreement_template">
+    </template>-->
+    <template id="thomasfleet.lease_agreement_template">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
                 <t t-call="web.external_layout">
@@ -36,6 +34,13 @@
                             <div class="row">
                                <h1 class="text-center">Rental Agreement</h1>
                             </div>
+                        <!--<div class="row">
+                            <div class="col-xs-8">
+                                <b>Lease #:</b>
+                                <t t-esc="doc.lease_number"/>
+                                <br/>
+                            </div>
+                        </div>-->
                         <div class="row">
                             <div class="col-xs-3">
                                 <b>Rental Start Date:</b>
@@ -320,13 +325,13 @@
                         <div class="row">
                             <div class="col-xs-8">
                                 <span t-if="doc.vehicle_id.asset_class.name == 'VAN'">
-                                    <img width="100%" src="/thomasfleet/static/src/img/cube_van.png" alt="Cube Van"/>
+                                    <img  width="100%" src="/thomasfleet/static/src/img/cube_van.png"/>
                                 </span>
                                 <span t-elif="doc.vehicle_id.asset_class.name == 'UTC'">
-                                    <img width="100%" src="/thomasfleet/static/src/img/cube_van.png" alt="Cube Van"/>
+                                    <img  width="100%" src="/thomasfleet/static/src/img/cube_van.png"/>
                                 </span>
                                 <span t-else="">
-                                    <img width="100%" src="/thomasfleet/static/src/img/pick_up.png" alt="Cube Van"/>
+                                    <img width="100%" src="/thomasfleet/static/src/img/pick_up.png"/>
                                 </span>
                             </div>
                             <div class="col-xs-4">
@@ -385,7 +390,7 @@
                                 <h3>Terms and Conditions</h3>
                             </div>
                         </div>
-                        <div class="row">
+                        <div  class="row">
                             <div class="col-xs-12">
                                 <p class="t_fine_print">A) <b>Rental Period is from:</b>
                                     <t t-esc="doc.lease_start_date"/>
@@ -400,7 +405,7 @@
                          <div class="row">
                             <div class="col-xs-12 t_fine_print">
                                 <p class="t_fine_print">B) This contract will renew every 30 days unless the vehicle is
-                                    returned.  Billing will occur at the beginning of each month after the initial
+                                    returned. Billing will occur at the beginning of each month after the initial
                                     rental date.</p>
                             </div>
                         </div>
@@ -506,7 +511,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="row">
+                        <!--<div class="row">
                             <div class="col-xs-8">
                                 <p>I) Vehicles returned with shareable damages will stay on rent unit repair costs are authorized by customer
                                 </p>
@@ -523,7 +528,7 @@
                                 <p>K) Off-rented vehicles that require Thomas Solution to pick up vehicle - charges will apply
                                 </p>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="row t_fine_print">
                             <div class="col-xs-8">
                                 <p>Other:
@@ -626,13 +631,13 @@
                         <div class="row">
                             <div class="col-xs-8">
                                 <span t-if="doc.vehicle_id.asset_class.name == 'VAN'">
-                                    <img width="100%" src="/thomasfleet/static/src/img/cube_van.png" alt="Cube Van"/>
+                                    <img width="100%" src="/thomasfleet/static/src/img/cube_van.png"/>
                                 </span>
                                 <span t-elif="doc.vehicle_id.asset_class.name == 'UTC'">
-                                    <img width="100%" src="/thomasfleet/static/src/img/cube_van.png" alt="Cube Van"/>
+                                    <img width="100%" src="/thomasfleet/static/src/img/cube_van.png"/>
                                 </span>
                                 <span t-else="">
-                                    <img width="100%" src="/thomasfleet/static/src/img/pick_up.png" alt="Cube Van"/>
+                                    <img width="100%" src="/thomasfleet/static/src/img/pick_up.png"/>
                                 </span>
                             </div>
                             <div class="col-xs-4">
@@ -641,11 +646,11 @@
                                     <dd class="col-xs-4"><hr/></dd>
                                 </dl>
                                 <b>Mileage:</b>
-                                <t t-esc="doc.mileage_at_return"/>
-                                KM
+                                <!--<t t-esc="doc.mileage_at_return"/>
+                                KM-->
                                 <br/>
                                 <b>Fuel:</b>
-                                <t t-esc="doc.fuel_at_lease"/>
+                                <!--<t t-esc="doc.fuel_at_lease"/>-->
                                 <br/>
                                 <b>Rental Notes:</b>
                                 <t t-esc="doc.lease_notes"/>
@@ -660,667 +665,5 @@
                 </t>
             </t>
         </t>
-    </template> -->
-
-    <template id="lease_agreement_document" name="lease_agreement_document">
-        <div class="page" style="page-break-after:always;page-break-inside:avoid">
-            <div class="row">
-                <h1 class="text-center">Rental Agreement</h1>
-            </div>
-            <!--<div class="row">
-                <div class="col-xs-8">
-                    <b>Lease #:</b>
-                    <t t-esc="doc.lease_number"/>
-                    <br/>
-                </div>
-            </div>-->
-            <div class="row">
-                <div class="col-xs-3">
-                    <b>Rental Start Date:</b>
-                    <t t-esc="doc.lease_start_date"/>
-                </div>
-                <div class="col-xs-2">
-                    <b>Unit #:</b>
-                    <t t-esc="doc.vehicle_id.unit_no"/>
-                </div>
-                <div class="col-xs-4">
-                    <b>Purchase Order #:</b>
-                    <t t-esc="doc.po_number"/>
-                </div>
-
-            </div>
-            <br/>
-            <div class="row">
-                <div class="col-xs-3">
-                    <h3>Customer Information</h3>
-                </div>
-                <div class="col-xs-3">
-                    <h3>Contacts</h3>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-3">
-                    <b>Customer Name:</b>
-                    <t t-esc="doc.customer_id.name"/>
-                    <br/>
-                    <b>Address:</b>
-                    <t t-esc="doc.customer_id.street"/>
-                    <br/>
-                    <t t-esc="doc.customer_id.street2"/>
-                    <br/>
-                    <b>City:</b>
-                    <t t-esc="doc.customer_id.city"/>
-                    <br/>
-                    <b>Province:</b>
-                    <t t-esc="doc.customer_id.state_id.name"/>
-                    <br/>
-                    <b>Postal Code:</b>
-                    <t t-esc="doc.customer_id.zip"/>
-                    <br/>
-                </div>
-                <div class="col-xs-2">
-                    <b>Driver:</b>
-                    <p>
-                        <b>Name:</b>
-                        <t t-esc="doc.driver_id.name"/>
-                        <br/>
-                        <b>Phone:</b>
-                        <t t-esc="doc.driver_id.phone"/>
-                        <br/>
-                        <b>License #:</b>
-                        <t t-esc="doc.driver_id.drivers_license"/>
-                        <br/>
-                        <b>Expires:</b>
-                        <t t-esc="doc.driver_id.drivers_license_expiry"/>
-                        <br/>
-                    </p>
-                </div>
-                <div class="col-xs-2">
-                    <b>Invoicing Contacts:</b>
-                    <t t-foreach="doc.ap_contact_ids" t-as="contact">
-                        <p>
-                            <b>Name:</b>
-                            <t t-esc="contact.name"/>
-                            <br/>
-                            <b>Phone:</b>
-                            <t t-esc="contact.phone"/>
-                        </p>
-                    </t>
-                </div>
-                <div t-if="doc.po_contact_ids" class="col-xs-2">
-                    <b>Purchasing Contacts:</b>
-                    <t t-foreach="doc.po_contact_ids" t-as="contact">
-                        <p>
-                            <b>Name:</b>
-                            <t t-esc="contact.name"/>
-                            <br/>
-                            <b>Phone:</b>
-                            <t t-esc="contact.phone"/>
-                        </p>
-                    </t>
-                </div>
-                <div t-if="doc.ops_contact_ids" class="col-xs-2">
-                    <b>Operations Contacts:</b>
-                    <t t-foreach="doc.ops_contact_ids" t-as="contact">
-                        <p>
-                            <b>Name:</b>
-                            <t t-esc="contact.name"/>
-                            <br/>
-                            <b>Phone:</b>
-                            <t t-esc="contact.phone"/>
-                        </p>
-                    </t>
-                </div>
-
-
-            </div>
-            <div class="row">
-                <div class="col-xs-5">
-                    <h3>Vehicle Information</h3>
-                </div>
-                <div class="col-xs-4">
-                    <h3>Inclusions and Accessories</h3>
-                </div>
-                <div class="col-xs-3">
-                    <h3>Notes</h3>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-2">
-                    <b>Unit #:</b>
-                    <t t-esc="doc.vehicle_id.unit_no"/>
-                    <br/>
-                    <b>Make:</b>
-                    <t t-esc="doc.vehicle_id.brand_id.name"/>
-                    <br/>
-                    <b>Style:</b>
-                    <t t-esc="doc.vehicle_id.trim_id.name"/>
-                    <br/>
-                </div>
-                <div class="col-xs-3">
-                    <b>Year:</b>
-                    <t t-esc="doc.vehicle_id.model_year"/>
-                    <br/>
-                    <b>Model:</b>
-                    <t t-esc="doc.vehicle_id.model_id.name"/>
-                    <br/>
-                    <b>VIN:</b>
-                    <t t-esc="doc.vehicle_id.vin_id"/>
-                    <br/>
-                </div>
-                <div class="col-xs-4">
-
-                    <t t-foreach="doc.vehicle_id.inclusions" t-as="inclusion">
-
-                        <span>
-                            <t t-esc="inclusion.name"/>
-                        </span>
-                        <br/>
-
-                    </t>
-                    <t t-foreach="doc.vehicle_id.accessories" t-as="accessory">
-                        <span t-if="accessory.name == 'Transponder'">
-                            <span>407 Transponder:
-                                <t t-esc="doc.transponder_id.unit_no"/>
-                                <br/>
-                            </span>
-
-                        </span>
-                        <span t-else="">
-                            <t t-esc="accessory.name"/>
-                            <br/>
-                        </span>
-                    </t>
-
-                </div>
-                <div class="col-xs-3">
-                    <b>Additional Charges:</b>
-                    <t t-esc="doc.additional_charges"/>
-                    <br/>
-
-                    <b>Contract #:</b>
-                    <t t-esc="doc.contract_number"/>
-                    <br/>
-                    <b>Purchase Order Comments:</b>
-                    <t t-esc="doc.po_comments"/>
-                    <br/>
-                    <b>Preferred Payment:</b>
-                    <t t-esc="doc.preferred_payment"/>
-                    <br/>
-                    <b>Additional Billing Notes:</b>
-                    <t t-esc="doc.additional_billing"/>
-                    <br/>
-                    <b>Billing Notes:</b>
-                    <t t-esc="doc.billing_notes"/>
-                    <br/>
-                </div>
-            </div>
-            <br/>
-            <div class="row">
-                <div class="col-xs-4">
-                    <h3>Rental Rates</h3>
-                </div>
-            </div>
-            <table class="table table-condensed">
-                <thead>
-                    <tr>
-                        <th>Description</th>
-                        <th>Price</th>
-                        <th>Tax</th>
-                        <th>Tax Amount</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr t-foreach="doc.lease_lines" t-as="line">
-                        <td>
-                            <t t-esc="line.description"/>
-                        </td>
-                        <td>
-                            <t t-esc="'%.2f'%(line.price)"/>
-                        </td>
-                        <td>
-                            <t t-esc="line.tax_id.name"/>
-                        </td>
-                        <td>
-                            <t t-esc="'%.2f'%(line.tax_amount)"/>
-                        </td>
-                        <td>
-                            <t t-esc="'%.2f'%(line.total)"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <p class="text-right">
-                                <b>Sub Total:</b>
-                            </p>
-                            <p class="text-right">
-                                <b>Tax:</b>
-                            </p>
-                            <p class="text-right">
-                                <b>Total Rate:</b>
-                            </p>
-                        </td>
-                        <td>
-                            <p>
-                                <t t-esc="'%.2f'%(doc.monthly_rate)"/>
-                            </p>
-                            <p>
-                                <t t-esc="'%.2f'%(doc.monthly_tax)"/>
-                            </p>
-                            <p>
-                                <t t-esc="'%.2f'%(doc.monthly_total)"/>
-                            </p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="page" style="page-break-after:always;page-break-inside:avoid">
-            <div class="row">
-                <div class="col-xs-8">
-                    <hr class="t_tight_line"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-2">
-                    <b>Unit #:</b>
-                    <t t-esc="doc.vehicle_id.unit_no"/>
-                </div>
-                <div class="col-xs-2">
-                    <b>Make:</b>
-                    <t t-esc="doc.vehicle_id.brand_id.name"/>
-                </div>
-                <div class="col-xs-2">
-                    <b>Model:</b>
-                    <t t-esc="doc.vehicle_id.model_id.name"/>
-                </div>
-                <div class="col-xs-2">
-                    <b>Year:</b>
-                    <t t-esc="doc.vehicle_id.model_year"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-8">
-                    <hr class="t_tight_line"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    <h3>Physical Condition</h3>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-4">Outgoing Inspection by:
-                    <t t-esc="doc.outgoing_inspector.name"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-8">
-                    <span t-if="doc.vehicle_id.asset_class.name == 'VAN'">
-                        <img width="100%" src="/thomasfleet/static/src/img/cube_van.png" alt="Cube Van"/>
-                    </span>
-                    <span t-elif="doc.vehicle_id.asset_class.name == 'UTC'">
-                        <img width="100%" src="/thomasfleet/static/src/img/cube_van.png" alt="Cube Van"/>
-                    </span>
-                    <span t-else="">
-                        <img width="100%" src="/thomasfleet/static/src/img/pick_up.png" alt="Cube Van"/>
-                    </span>
-                </div>
-                <div class="col-xs-4">
-                    <dl class="row">
-                        <dt class="col-md-4">
-                            <b>Spare Key Initials: </b>
-                        </dt>
-                        <dd class="col-xs-4">
-                            <hr/>
-                        </dd>
-                    </dl>
-                    <b>Outgoing Mileage:</b>
-                    <t t-esc="doc.mileage_at_lease"/>
-                                KM
-                    <br/>
-                    <b>Fuel:</b>
-                    <t t-esc="doc.fuel_at_lease"/>
-                    <br/>
-                    <b>Rental Notes:</b>
-                    <t t-esc="doc.lease_notes"/>
-                    <br/>
-                    <b>Inspection Notes:</b>
-                    <t t-esc="doc.inspection_notes"/>
-                    <br/>
-                </div>
-
-            </div>
-        </div>
-        <div class="page" style="page-break-after:always;page-break-inside:avoid">
-            <div class="row">
-                <div class="col-xs-8">
-                    <hr class="t_tight_line"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-2">
-                    <b>Unit #:</b>
-                    <t t-esc="doc.vehicle_id.unit_no"/>
-                </div>
-                <div class="col-xs-2">
-                    <b>Make:</b>
-                    <t t-esc="doc.vehicle_id.brand_id.name"/>
-                </div>
-                <div class="col-xs-2">
-                    <b>Model:</b>
-                    <t t-esc="doc.vehicle_id.model_id.name"/>
-                </div>
-                <div class="col-xs-2">
-                    <b>Year:</b>
-                    <t t-esc="doc.vehicle_id.model_year"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-8">
-                    <hr class="t_tight_line"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    <h3>Terms and Conditions</h3>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <p class="t_fine_print">A) <b>Rental Period is from:</b>
-                        <t t-esc="doc.lease_start_date"/>
-                                    to:
-                        <t t-esc="doc.min_lease_end_date"/>
-                                    or longer. Billing Start date is:
-                        <t t-esc="doc.billing_start_date"/>
-                        <br/>
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 t_fine_print">
-                    <p class="t_fine_print">B) This contract will renew every 30 days unless the vehicle is
-                                    returned.  Billing will occur at the beginning of each month after the initial
-                                    rental date.</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 t_fine_print">
-                    <p class="t_fine_print">C) <b>Rate Type:</b>
-                        <t t-esc="doc.rate_calc_description"/>
-                    </p>
-                    <u>Rental Duration Calculations:</u>
-                    <t t-raw="doc.rate_calc_example_for_report"/>
-                </div>
-            </div>
-            <div class="row t_fine_print">
-                <div class="col-xs-12">
-                    <p>D) Customer is responsible for Insurance</p>
-                </div>
-            </div>
-            <dl class="row t_fine_print">
-                <dt class="col-xs-3">Insurance Information</dt>
-                <dd class="col-xs-3">
-                    <p t-if="doc.customer_id.insurance_on_file">
-                        <b>Proof of Insurance on File:</b>
-                                    Yes
-                    </p>
-                    <p t-else="">
-                        <b>Proof of Insurance on File:</b>
-                                    No
-                    </p>
-                    <p>
-                        <b>Agent:</b>
-                        <t t-esc="doc.customer_id.insurance_agent"/>
-                    </p>
-                    <p>
-                        <b>Underwriter:</b>
-                        <t t-esc="doc.customer_id.insurance_underwriter"/>
-                    </p>
-                    <p>
-                        <b>Policy #:</b>
-                        <t t-esc="doc.customer_id.insurance_policy"/>
-                    </p>
-                    <p>
-                        <b>Expiration Date:</b>
-                        <t t-esc="doc.customer_id.insurance_expiration"/>
-                    </p>
-                </dd>
-            </dl>
-            <dl class="row t_fine_print">
-                <dt class="col-xs-3">CVOR Information</dt>
-                <dd class="col-xs-3">
-                    <p>
-                        <b>CVOR #:</b>
-                    </p>
-                    <p>
-                        <b>CVOR Expiration Date:</b>
-                    </p>
-                </dd>
-            </dl>
-            <div class="row t_fine_print">
-                <div class="col-xs-12">
-                    <p>E) Thomas Solutions does NOT give authority to use CVOR without written consent
-                    </p>
-                </div>
-            </div>
-            <div class="row t_fine_print">
-                <div class="col-xs-12">
-                    <p>F) Any vehicles with a registered gross weight over 4500Kg, customer must provide a valid CVOR certificate
-                    </p>
-                </div>
-            </div>
-            <div class="row t_fine_print">
-                <div class="col-xs-12">
-                    <p>G) Monthly rate <b>does not</b> include towing charges for vehicle in case of breakdown</p>
-                </div>
-            </div>
-            <div class="row t_fine_print">
-                <div class="col-xs-12">
-                    <p>H) Customer responsible for all damage regardless of fault (including tires)</p>
-                </div>
-            </div>
-            <div class="row t_fine_print">
-
-                <div class="col-xs-12">
-                    <p>I) It is the customer's responsibility to bring the  vehicle to the shop for service
-                    </p>
-                </div>
-            </div>
-            <div class="row t_fine_print">
-
-                <div class="col-xs-12">
-                    <p>J) Please note the "normal allotted" kilometers is
-                        <t t-esc="doc.monthly_mileage"/>
- per
-                        <span t-if="doc.rate_type=='Weekly'"> week</span>
-                        <span t-elif="doc.rate_type=='Daily'"> day</span>
-                        <span t-elif="doc.rate_type=='Term'"> term</span>
-                        <span t-else=""> month</span>. Any  additional mileage will be incur a
-                                    $                        <t t-esc="doc.mileage_overage_rate"/>
- charge/km
-                    </p>
-                </div>
-            </div>
-            <div class="row t_fine_print">
-                <div class="col-xs-8">
-                    <p>K) Delivery Charge: $
-                        <t t-esc="doc.delivery_charge"/>
-                    </p>
-                </div>
-            </div>
-            <!--<div class="row">
-                <div class="col-xs-8">
-                    <p>I) Vehicles returned with shareable damages will stay on rent unit repair costs are authorized by customer
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-8">
-                    <p>J) Surcharges will apply for any tickets or 407 charges
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-8">
-                    <p>K) Off-rented vehicles that require Thomas Solution to pick up vehicle - charges will apply
-                    </p>
-                </div>
-            </div>-->
-            <div class="row t_fine_print">
-                <div class="col-xs-8">
-                    <p>Other:
-                        <hr/>
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    <h3>Signatures</h3>
-                </div>
-            </div>
-            <div class="justify_content_start row no_gutters">
-                <div class="col-xs-3">Customer Name (print):</div>
-                <div class="col-xs-3 text-left">
-                    <hr/>
-                </div>
-                <div class="col-xs-1">Date:</div>
-                <div class="col-xs-2 text-left">
-                    <hr/>
-                </div>
-            </div>
-            <div class="justify_content_start row no_gutters">
-                <div class="col-xs-3">Customer Signature:</div>
-                <div class="col-xs-3 text-left">
-                    <hr/>
-                </div>
-                <div class="col-xs-1">Date:</div>
-                <div class="col-xs-2 text-left">
-                    <hr/>
-                </div>
-
-            </div>
-            <div class="justify_content_start row no_gutters">
-                <div class="col-xs-3">Thomas Solutions Signature:</div>
-                <div class="col-xs-3 text-left">
-                    <b>
-                        <hr/>
-                    </b>
-                </div>
-                <div class="col-xs-1">Date:</div>
-                <div class="col-xs-2 text-left">
-                    <hr/>
-                </div>
-            </div>
-        </div>
-        <div class="page" style="page-break-after:always;page-break-inside:avoid">
-            <div class="row">
-                <div class="col-xs-8">
-                    <hr class="t_tight_line"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-2">
-                    <b>Unit #:</b>
-                    <t t-esc="doc.vehicle_id.unit_no"/>
-                </div>
-                <div class="col-xs-2">
-                    <b>Make:</b>
-                    <t t-esc="doc.vehicle_id.brand_id.name"/>
-                </div>
-                <div class="col-xs-2">
-                    <b>Model:</b>
-                    <t t-esc="doc.vehicle_id.model_id.name"/>
-                </div>
-                <div class="col-xs-2">
-                    <b>Year:</b>
-                    <t t-esc="doc.vehicle_id.model_year"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-8">
-                    <hr class="t_tight_line"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    <h3>Rental Return</h3>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    <b>Return Date:</b>
-                    <t t-esc="doc.lease_return_date"/>
-
-                </div>
-                <div class="col-xs-4">
-                    <b>Unit # :</b>
-                    <t t-esc="doc.vehicle_id.unit_no"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    <h3>Physical Condition</h3>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-4">Return Inspection by:
-                    <t t-esc="doc.incoming_inspector.name"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-8">
-                    <span t-if="doc.vehicle_id.asset_class.name == 'VAN'">
-                        <img width="100%" src="/thomasfleet/static/src/img/cube_van.png" alt="Cube Van"/>
-                    </span>
-                    <span t-elif="doc.vehicle_id.asset_class.name == 'UTC'">
-                        <img width="100%" src="/thomasfleet/static/src/img/cube_van.png" alt="Cube Van"/>
-                    </span>
-                    <span t-else="">
-                        <img width="100%" src="/thomasfleet/static/src/img/pick_up.png" alt="Cube Van"/>
-                    </span>
-                </div>
-                <div class="col-xs-4">
-                    <dl class="row">
-                        <dt class="col-md-4">
-                            <b>Spare Key Initials: </b>
-                        </dt>
-                        <dd class="col-xs-4">
-                            <hr/>
-                        </dd>
-                    </dl>
-                    <b>Mileage:</b>
-                    <!--<t t-esc="doc.mileage_at_return"/>
-                                KM-->
-                    <br/>
-                    <b>Fuel:</b>
-                    <!--<t t-esc="doc.fuel_at_lease"/>-->
-                    <br/>
-                    <b>Rental Notes:</b>
-                    <t t-esc="doc.lease_notes"/>
-                    <br/>
-                    <b>Inspection Notes:</b>
-                    <t t-esc="doc.inspection_notes"/>
-                    <br/>
-                </div>
-
-            </div>
-        </div>
     </template>
-
-
-    <template id="thomasfleet.lease_agreement_template">
-        <t t-call="web.html_container">
-            <t t-foreach="docs" t-as="o">
-                <t t-set="lang" t-value="o.invoice_user_id.sudo().lang if o.invoice_user_id else o.partner_id.lang"/>
-                <t t-call="thomasfleet.lease_agreement_document" t-lang="lang"/>
-            </t>
-        </t>
-    </template>
-
 </odoo>

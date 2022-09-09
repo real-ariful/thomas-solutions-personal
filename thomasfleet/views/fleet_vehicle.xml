@@ -94,44 +94,6 @@
                         </group>
                     </group>
                 </div>
-                <!-- <xpath expr="//form[1]" position="replace">
-                    <form string="Vehicle">
-                        <sheet>
-                            <div class="oe_title">
-                                <h1>
-                                    <field name="unit_slug" class="oe_read_only"/>
-                                    <br/>
-                                </h1>
-
-                                <label for="unit_no"/>
-                                <div class="oe_edit_only">
-                                    <field name="unit_no"></field>
-                                    <br/>
-                                </div>
-                                <label for="vin_id"/>
-                                <field name="vin_id"></field>
-                                <br/>
-                                <label for="license_plate"/>
-                                <field name="license_plate"/>
-                                <br/>
-                            </div>
-                            <group col="3">
-                                <group>
-                                    <field name="unit_quality"/>
-                                </group>
-                                <group>
-                                    <field name="lease_status"/>
-                                </group>
-                                <group>
-                                    <field name="fleet_status"/>
-                                </group>
-                            </group>
-                        </sheet>
-                        <div class="oe_chatter">
-                            <field name="message_follower_ids" widget="mail_followers"/>
-                            <field name="message_ids" widget="mail_thread"/>
-                        </div>
-                    </form> -->
 
                 <xpath expr="//notebook//page[1]" position="before">
                     <page string="Unit Specs">
@@ -314,17 +276,6 @@
                 <xpath expr="//field[@name='tag_ids']" position="attributes">
                     <attribute name="optional">True</attribute>
                 </xpath>
-                <!-- <xpath expr="//field[@name='license_plate']" position="before">
-                    <field name="unit_no"></field>
-                    <field name="brand_id"/>
-                    <field name="model_id"></field>
-                    <field name="trim_id"></field>
-                    <field name="color"></field>
-                    <field name="vin_id"></field>
-                    <field name="license_plate"></field>
-                    <field name="fleet_status"/>
-                    <field name="location"></field> 
-                </xpath> -->
             </field>
         </record>
 
@@ -442,7 +393,8 @@
             <field name="model">fleet.vehicle</field>
             <field name="inherit_id" ref="fleet.fleet_vehicle_view_search"></field>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='name']" position="before">
+                <!-- <xpath expr="//field[@name='name']" position="before"> -->
+                <xpath expr="//search[1]" position="replace">
                     <search string="All vehicles">
                         <field name="unit_no"></field>
                         <field name="vin_id"></field>

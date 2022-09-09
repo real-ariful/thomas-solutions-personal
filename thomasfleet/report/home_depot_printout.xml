@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
     <odoo>
-        <record id="lease_agreement"
+        <!-- <record id="lease_agreement"
             name="thomasfleet.home_depot_template"
             model="thomaslease.lease"
             string="Lease Agreement"
-            report_type="qweb-pdf"/>
+            report_type="qweb-pdf"/> -->
+
+        <record id="thomasfleet.lease_agreement" model="ir.actions.report">
+            <field name="name">Lease Agreement</field>
+            <field name="model">thomaslease.lease</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">thomasfleet.home_depot_template</field>
+            <field name="report_file">thomasfleet.home_depot_template</field>
+            <field name="print_report_name">(object._get_report_lease_agreement())</field>
+            <field name="binding_model_id" ref="model_thomaslease_lease"/>
+            <field name="binding_type">report</field>
+        </record>
+
     </odoo>

@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
     <odoo>
-        <report id="lease_agreement"
+        <!-- <report id="lease_agreement"
                 name="thomasfleet.lease_agreement_template"
                 model="thomaslease.lease"
                 string="Rental Agreement"
-                report_type="qweb-pdf"/>
-        <report
-            id="test_account_invoices"
-            model="account.move"
-            string="Invoices[TEST]"
-            report_type="qweb-pdf"
-            name="thomasfleet.givex_report_invoice"
-            file="thomasfleet.givex_report_invoice"
-            attachment="(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')"
-            attachment_use="False"
-            print_report_name="(object._get_report_base_filename())"
-            groups="account.group_account_invoice"
-        />
-
+                report_type="qweb-pdf"/> -->
+        <record id="lease_agreement" model="ir.actions.report">
+            <field name="name">Rental Agreement</field>
+            <field name="model">thomaslease.lease</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">thomasfleet.lease_agreement_template</field>
+            <field name="report_file">thomasfleet.lease_agreement_template</field>
+            <field name="print_report_name">(object._get_report_rental_agreement())</field>
+            <field name="binding_model_id" ref="model_thomaslease_lease"/>
+            <field name="binding_type">report</field>
+        </record>
 
     </odoo>

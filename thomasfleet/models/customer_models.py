@@ -12,7 +12,7 @@ class ThomasContact(models.Model):
     qc_check = fields.Boolean(string='Data Accuracy Validation',tracking=True)
     lease_agreements = fields.One2many('thomaslease.lease', 'customer_id', 'Lease Contracts',tracking=True)
     documents = fields.One2many('thomasfleet.customer_document', 'customer_id', 'Customer Docucments',tracking=True)
-    department = fields.Many2one('thomasfleet.customer_department','Department',tracking=True)
+    department = fields.Many2one('thomasfleet.customer_department','Department ',tracking=True)
     protractor_guid = fields.Char(string='Protractor GUID', readonly=True,tracking=True)
     protractor_search_name = fields.Char(string="Search Name", compute='_compute_protractor_search_name',tracking=True)
     ap_contact = fields.Boolean(string="Accounts Payable Contact",tracking=True)

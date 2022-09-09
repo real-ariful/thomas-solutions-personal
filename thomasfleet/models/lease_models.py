@@ -176,7 +176,6 @@ class ThomasLease(models.Model):
             self.partner_shipping_id = addr.get('contact')
 
 
-    @api.model
     def btn_validate(self):
         for rec in self:
             rec.state = 'active'
@@ -327,6 +326,13 @@ class ThomasLease(models.Model):
     rate_calc_example = fields.Text("Rate Calculations", compute='_compute_rate_calc_example')
     rate_calc_example_for_report = fields.Html("Rate Calculations [Example]", compute='_compute_rate_calc_example_html')
 
+    def _get_report_lease_agreement(self):
+        return 'Lease Agreement'
+
+    def _get_report_rental_agreement(self):
+        return 'Rental Agreement'
+
+
     @api.depends('lease_lines')
     def _compute_rate_calc_description(self):
         for rec in self:
@@ -382,6 +388,7 @@ class ThomasLease(models.Model):
     @api.depends('lease_lines')
     def _compute_rate_calc_example_html(self):
         for rec in self:
+            rec.rate_calc_example_for_report = ''
             for line in rec.lease_lines:
                 example = ''
 
